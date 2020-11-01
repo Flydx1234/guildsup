@@ -2,14 +2,14 @@ The content below is an example project proposal / requirements document. Replac
 
 (___TODO__: your project name_)
 
-# Shoppy Shoperson
+# Guilds
 
 ## Overview
 
 (___TODO__: a brief one or two paragraph, high-level description of your project_)
 
 
-Tired of not having anyone to play your favorite game with? Well, that's where Guilds comes in!
+  Tired of not having anyone to play your favorite game with? Well, that's where Guilds comes in!
 Guilds is a platform for gamers to create their own communities for their favorite games much like an actual guild in a game such as WoW.
 Many games, such as Hearthstone, Genshin Impact, Fortnite, Among Us don't really have a system in place for players to build up a group of friends
 to consistently play together and do cool stuff.
@@ -65,6 +65,7 @@ An Example Game:
   game: "WoW",
   guilds: //array of guilds that are related to WoW
 }
+```
 
 An Example Chat Room:
 
@@ -73,7 +74,7 @@ An Example Chat Room:
   name: //chatroom name
   messages: //array of objects that contains user messages and timestamp
 }
-
+```
 
 ## [Link to Commented First Draft Schema](https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/master/db.js)
 
