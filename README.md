@@ -75,9 +75,7 @@ An Example Chat Room:
 }
 
 
-## [Link to Commented First Draft Schema](db.js)
-
-(___TODO__: create a first draft of your Schemas in db.js and link to it_)
+## [Link to Commented First Draft Schema](https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/master/db.js)
 
 ## Wireframes
 
