@@ -2,54 +2,80 @@ The content below is an example project proposal / requirements document. Replac
 
 (___TODO__: your project name_)
 
-# Shoppy Shoperson 
+# Shoppy Shoperson
 
 ## Overview
 
 (___TODO__: a brief one or two paragraph, high-level description of your project_)
 
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
 
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
+Tired of not having anyone to play your favorite game with? Well, that's where Guilds comes in!
+Guilds is a platform for gamers to create their own communities for their favorite games much like an actual guild in a game such as WoW.
+Many games, such as Hearthstone, Genshin Impact, Fortnite, Among Us don't really have a system in place for players to build up a group of friends
+to consistently play together and do cool stuff.
+With Guilds, users can create their own accounts and keep track of the guilds that they are in for different games. Users can also create guilds of their
+own for others to join. The idea is to have a list of games that users can create guilds for, and as more users join the site, they would be able to add
+games that are not on the list to create a guild for. Initial goal is to implement at least a chat room for each guild group.
 
 
 ## Data Model
 
-(___TODO__: a description of your application's data and their relationships to each other_) 
+The application will store Users, Guilds, and Games, and Chat
 
-The application will store Users, Lists and Items
-
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
-
-(___TODO__: sample documents_)
+* users can be in multiple guilds
+* one guild can have multiple users
+* each guild can only revolve around 1 game
+* a user can create multiple guilds of different games
+* a user can only create 1 guild per game
+* a guild can only have many chat rooms
+* a chat room can only belong to one guild
 
 An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
+  username: "gamerdude123",
   hash: // a password hash,
-  lists: // an array of references to List documents
+  guilds: // an array of guild objects that the user is in and the date they joined
+  ownGuilds: //an array of guilds that the user created
 }
 ```
 
-An Example List with Embedded Items:
+An Example Guild:
 
 ```javascript
 {
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
+  guildName: "WoW Raiders",
+  game: "Wow",
+  state: "private",
+  memberLimit: 50,
+  members: [
+    { name: "player1", joinDate: //timestamp},
+    { name: "player2", joinDate: //timestamp},
   ],
+  chatRooms: //array of chatrooms that belong to the guild
   createdAt: // timestamp
 }
 ```
 
+An Example Game:
 
-## [Link to Commented First Draft Schema](db.js) 
+```javascript
+{
+  game: "WoW",
+  guilds: //array of guilds that are related to WoW
+}
+
+An Example Chat Room:
+
+```javascript
+{
+  name: //chatroom name
+  messages: //array of objects that contains user messages and timestamp
+}
+
+
+## [Link to Commented First Draft Schema](db.js)
 
 (___TODO__: create a first draft of your Schemas in db.js and link to it_)
 
@@ -104,7 +130,7 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
 
 
-## [Link to Initial Main Project File](app.js) 
+## [Link to Initial Main Project File](app.js)
 
 (___TODO__: create a skeleton Express application with a package.json, app.js, views folder, etc. ... and link to your initial app.js_)
 
