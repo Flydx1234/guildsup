@@ -1,13 +1,6 @@
-The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
-
-(___TODO__: your project name_)
-
 # Guilds
 
 ## Overview
-
-(___TODO__: a brief one or two paragraph, high-level description of your project_)
-
 
   Tired of not having anyone to play your favorite game with? Well, that's where Guilds comes in!
 Guilds is a platform for gamers to create their own communities for their favorite games much like an actual guild in a game such as WoW.
@@ -83,8 +76,6 @@ An Example Chat Room:
 
 ## Wireframes
 
-(___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
-
 /guilds - page that lists guilds
 
 ![list create](documentation/guilds.png)
@@ -123,8 +114,6 @@ An Example Chat Room:
 
 ## User Stories or Use Cases
 
-(___TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://www.mongodb.com/download-center?jmp=docs&_ga=1.47552679.1838903181.1489282706#previous)_)
-
 1. as non-registered user, I can register a new account with the site
 2. as non-registered user, I can see the list of games and Guilds
 3. as non-registered user, I can see other user's profiles
@@ -135,13 +124,12 @@ An Example Chat Room:
 
 ## Research Topics
 
-
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
 * (4 points) Deploying my site through Heroku
     * Haven't used Heroku before, so this is just an estimate for the number of points
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
+9 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
 
 
 ## [Link to Initial Main Project File](app.js)
