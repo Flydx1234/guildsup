@@ -93,6 +93,18 @@ An Example Chat Room:
 
 ![list](documentation/index.png)
 
+
+/login - page for user to login
+
+![list](documentation/login.png)
+
+/register - page for user to register
+
+![list](documentation/register.png)
+
+/user - page that lists the user's guilds and allows them to change password/email if logged in
+![list](documentation/user.png)
+
 /inguild - page shown if user is in the guild
 
 ![list](documentation/inguild.png)
@@ -103,13 +115,11 @@ An Example Chat Room:
 
 /createGuild - page shown when creating a guild
 
-![list](documentation/createGuild.png)
+![list](documentation/createguild.png)
 
 ## Site map
 
-(___TODO__: draw out a site map that shows how pages are related to each other_)
-
-Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
+![list](documentation/sitemap.png)
 
 ## User Stories or Use Cases
 
