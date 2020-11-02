@@ -126,31 +126,25 @@ An Example Chat Room:
 (___TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://www.mongodb.com/download-center?jmp=docs&_ga=1.47552679.1838903181.1489282706#previous)_)
 
 1. as non-registered user, I can register a new account with the site
-2. as a user, I can log in to the site
-3. as a user, I can create or join a guild
-4. as a guild member, I can see the guild and chat in the chatroom
+2. as non-registered user, I can see the list of games and Guilds
+3. as non-registered user, I can see other user's profiles
+4. as a user, I can log in to the site
+5. as a user, I can create or join a guild
+6. as a user, I can add a game to the overall list of games
+7. as a guild member, I can see the guild members and chat in the chatroom
 
 ## Research Topics
 
-(___TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed_)
 
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-* (4 points) Perform client side form validation using a JavaScript library
-    * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-    * if you put in a number that's greater than 5, an error message will appear in the dom
-* (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
+* (4 points) Deploying my site through Heroku
+    * Haven't used Heroku before, so this is just an estimate for the number of points
 
 10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
 
 
 ## [Link to Initial Main Project File](app.js)
-
-(___TODO__: create a skeleton Express application with a package.json, app.js, views folder, etc. ... and link to your initial app.js_)
 
 ## Annotations / References Used
 
