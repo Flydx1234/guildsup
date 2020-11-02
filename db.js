@@ -11,9 +11,10 @@ const User = new mongoose.Schema({
   // password hash provided by authentication plugin
   username: {type:String, required:true},
   hash: {type:String, required:true},// a password hash,
+  status: {type:String, required:true},//online or offline
   guilds: [{}], // an array of objects for guilds that the user is in, and the date that they joined
-  ownGuilds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Guild' }]}, //an array of guilds objects that the user created
-  _id: true
+  ownGuilds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Guild' }] //an array of guilds objects that the user created
+  },{_id: true
 });
 
 
@@ -22,13 +23,14 @@ const User = new mongoose.Schema({
 const Guild = new mongoose.Schema({
   name: {type: String, required: true},
   game: {type: String, required: true},
-  state: {type: String, required: true}, //state of the guild, private or public potentially will just be public only to start
+  state: {type: String, required: true}, //state of the guild, private or public, probably will just be public only to start
   memberLimit: {type: Number, required: true},
+  description: String,
+  imgUrl: String,
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GuildMember' }],
   chatRooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ChatRoom' }],
   dateCreated: {type:Date,required:true}
-  },
-  _id: true
+  },{_id: true
 });
 
 
@@ -40,6 +42,7 @@ const Game = new mongoose.Schema({
 
 const ChatRoom = new mongoose.Schema({
   name: {type: String, required: true},
+  pinned:[{}], //pinned messages
   messages: [{}] //an array of messages from users with timestamp
 })
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below

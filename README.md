@@ -36,6 +36,7 @@ An Example User:
 {
   username: "gamerdude123",
   hash: // a password hash,
+  status: //is the user online or not
   guilds: // an array of guild objects that the user is in and the date they joined
   ownGuilds: //an array of guilds that the user created
 }
@@ -48,6 +49,8 @@ An Example Guild:
   guildName: "WoW Raiders",
   game: "Wow",
   state: "private",
+  description: "We raiding all day",
+  imgUrl: img.png,
   memberLimit: 50,
   members: [
     { name: "player1", joinDate: //timestamp},
@@ -82,17 +85,25 @@ An Example Chat Room:
 
 (___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
 
-/list/create - page for creating a new shopping list
+/guilds - page that lists guilds
 
-![list create](documentation/list-create.png)
+![list create](documentation/guilds.png)
 
-/list - page for showing all shopping lists
+/index - page showing all games
 
-![list](documentation/list.png)
+![list](documentation/index.png)
 
-/list/slug - page for showing specific shopping list
+/inguild - page shown if user is in the guild
 
-![list](documentation/list-slug.png)
+![list](documentation/inguild.png)
+
+/notinguild - page shown if user is not in the guild
+
+![list](documentation/notinguild.png)
+
+/createGuild - page shown when creating a guild
+
+![list](documentation/createGuild.png)
 
 ## Site map
 

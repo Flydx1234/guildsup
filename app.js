@@ -29,4 +29,19 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/inguild', (req, res) => {
+  res.render('inguild');
+});
+
+app.post('/inguild', (req, res) => {
+  res.render('inguild');
+});
+
+app.get('/guilds', (req, res) => {
+  res.render('guilds');
+});
+
+app.get('/notinguild', (req, res) => {
+  res.render('notinguild');
+});
 app.listen(3000);
