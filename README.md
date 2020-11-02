@@ -127,10 +127,8 @@ An Example Chat Room:
 
 1. as non-registered user, I can register a new account with the site
 2. as a user, I can log in to the site
-3. as a user, I can create a new grocery list
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+3. as a user, I can create or join a guild
+4. as a guild member, I can see the guild and chat in the chatroom
 
 ## Research Topics
 
