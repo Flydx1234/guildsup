@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // enable sessions
 const session = require('express-session');
@@ -44,4 +45,4 @@ app.get('/guilds', (req, res) => {
 app.get('/notinguild', (req, res) => {
   res.render('notinguild');
 });
-app.listen(3000);
+app.listen(PORT);
