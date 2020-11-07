@@ -3,9 +3,14 @@ require('./db');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-
 const app = express();
+require("./db");
 const PORT = process.env.PORT || 3000;
+const mongoose = require("mongoose");
+const User = mongoose.model("User");
+const Guild = mongoose.model("Guild");
+const Game = mongoose.model("Game");
+const ChatRoom = mongoose.model("ChatRoom");
 
 // enable sessions
 const session = require('express-session');
@@ -27,7 +32,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.render('index');
+  const searchOptions = {};
+  Game.find(searchOptions,(err,val)=>{
+    if(err){
+      throw err;
+    }
+    const context = {
+      arr:val
+    };
+    res.render("index",context);
+  });
 });
 
 app.get('/inguild', (req, res) => {
@@ -39,10 +53,47 @@ app.post('/inguild', (req, res) => {
 });
 
 app.get('/guilds', (req, res) => {
-  res.render('guilds');
+  const name = req.query.name;
+  Game.find({game:name},(err,val)=>{
+    if(err){
+      throw err;
+    }
+    const guilds = {
+      arr:val.guilds
+    }
+    res.render('guilds',guilds);
+  });
 });
 
 app.get('/notinguild', (req, res) => {
   res.render('notinguild');
 });
+
+app.get('/addGame',(req,res)=>{
+  res.render('addGame');
+});
+
+app.post('/addGame',(req,res)=>{
+  const name = req.body.name.trim().toLowerCase();
+  Game.find({game:name},(err,val)=>{
+    if(err){
+      throw err;
+    }
+    if(val.length <= 0){
+      const entry = new Game({
+        game: name,
+        img: req.body.img
+      });
+      console.log(entry);
+      entry.save(function(err){
+        console.log("saved");
+        if(err){
+          throw err;
+        }
+        res.redirect("/");
+      });
+    }
+  });
+});
+
 app.listen(PORT);

@@ -1,2 +1,9 @@
 List of Games
 <a href = "/guilds"><img src = "https://upload.wikimedia.org/wikipedia/en/thumb/9/91/WoW_Box_Art1.jpg/220px-WoW_Box_Art1.jpg"></a>
+
+<table>
+{{#each arr}}
+  <tr><a href = "/guilds?name={{game}}"<td>{{game}}</td><td><img src = {{img}}></td>
+{{/each}}
+</table>
+<p>Can't find your game?<a href = "/addGame"> Click here</a> to add it! </p>

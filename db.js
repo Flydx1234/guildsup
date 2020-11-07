@@ -1,5 +1,6 @@
 // 1ST DRAFT DATA MODEL
 const mongoose = require('mongoose');
+var url = 'mongodb+srv://flydx1234:Bobzilla000@guildsup.yxbop.mongodb.net/guildsup?retryWrites=true&w=majority';
 
 // users
 // * our site requires authentication...
@@ -15,7 +16,7 @@ const User = new mongoose.Schema({
   guilds: [{}], // an array of objects for guilds that the user is in, and the date that they joined
   ownGuilds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Guild' }] //an array of guilds objects that the user created
   },{_id: true
-});
+},{collation: { locale: 'en', strength: 2 }});
 
 
 // a guild for one specific game, contains many number of users not
@@ -31,12 +32,13 @@ const Guild = new mongoose.Schema({
   chatRooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ChatRoom' }],
   dateCreated: {type:Date,required:true}
   },{_id: true
-});
+},{collation: { locale: 'en', strength: 2 }});
 
 
 // a list of games, and guilds for that game
 const Game = new mongoose.Schema({
   game: {type: String, required: true},
+  img: {type:String, required:true},
   guilds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Guild' }],
 });
 
@@ -44,5 +46,14 @@ const ChatRoom = new mongoose.Schema({
   name: {type: String, required: true},
   pinned:[{}], //pinned messages
   messages: [{}] //an array of messages from users with timestamp
-})
+},{collation: { locale: 'en', strength: 2 }})
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
+
+mongoose.model("User", User);
+mongoose.model("Game", Game);
+mongoose.model("Guild", Guild);
+mongoose.model("ChatRoom", ChatRoom);
+
+mongoose.connect(url,function(err){
+  console.log("success");
+});
