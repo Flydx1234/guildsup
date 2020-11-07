@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   const searchOptions = {};
+  console.log("asdf");
   Game.find(searchOptions,(err,val)=>{
     if(err){
       throw err;

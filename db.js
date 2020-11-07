@@ -55,5 +55,7 @@ mongoose.model("Guild", Guild);
 mongoose.model("ChatRoom", ChatRoom);
 
 mongoose.connect(url,function(err){
-  console.log("success");
+  if(err){
+    throw err;
+  }
 });
