@@ -17,7 +17,7 @@ const session = require('express-session');
 const sessionOptions = {
     secret: 'secret cookie thang (store this elsewhere!)',
     resave: true,
-      saveUninitialized: true
+    saveUninitialized: true
 };
 app.use(session(sessionOptions));
 
@@ -42,6 +42,24 @@ app.get('/', (req, res) => {
     };
     res.render("index",context);
   });
+});
+
+
+app.get('/login',(req,res)=>{
+  res.render("login");
+});
+
+app.post('/login',(req,res)=>{
+  if(req.body.register === "Register"){
+    res.redirect("/register");
+  }
+  else{
+    res.redirect("/");
+  }
+});
+
+app.get("/register",(req,res)=>{
+  res.render("register");
 });
 
 app.get('/inguild', (req, res) => {
@@ -93,5 +111,6 @@ app.post('/addGame',(req,res)=>{
     }
   });
 });
+
 
 app.listen(PORT);
