@@ -1,7 +1,17 @@
 // 1ST DRAFT DATA MODEL
 const mongoose = require('mongoose');
-var url = 'mongodb+srv://flydx1234:Bobzilla000@guildsup.yxbop.mongodb.net/guildsup?retryWrites=true&w=majority';
-
+let uri;
+if(process.env.NODE_ENV === 'PRODUCTION'){
+  uri = process.env.MONGOD_URI;
+}
+else{
+  const fs = require("fs");
+  const path = require("path");
+  const fn = path.join(__dirname,"config.json");
+  const data = fs.readFileSync(fn);
+  const conf = JSON.parse(data);
+  uri = conf.uri
+}
 // users
 // * our site requires authentication...
 // * so users have a username and password
@@ -54,7 +64,7 @@ mongoose.model("Game", Game);
 mongoose.model("Guild", Guild);
 mongoose.model("ChatRoom", ChatRoom);
 
-mongoose.connect(url,function(err){
+mongoose.connect(uri,function(err){
   if(err){
     throw err;
   }

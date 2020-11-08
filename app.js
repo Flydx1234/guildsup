@@ -33,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   const searchOptions = {};
-  console.log("asdf");
   Game.find(searchOptions,(err,val)=>{
     if(err){
       throw err;
@@ -85,9 +84,7 @@ app.post('/addGame',(req,res)=>{
         game: name,
         img: req.body.img
       });
-      console.log(entry);
       entry.save(function(err){
-        console.log("saved");
         if(err){
           throw err;
         }
