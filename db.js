@@ -1,6 +1,8 @@
 // 1ST DRAFT DATA MODEL
 const mongoose = require('mongoose');
 let uri;
+
+//envrionmental variables are on the heroku cli
 if(process.env.NODE_ENV === 'PRODUCTION'){
   uri = process.env.MONGOD_URI;
 }
