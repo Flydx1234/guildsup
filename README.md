@@ -141,5 +141,5 @@ An Example Chat Room:
 
 ## Annotations / References Used
 
-1. [ReCaptcha Docs](https://developers.google.com/recaptcha/docs) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/3a34c4f22943c4aa23f93582bf84541a818d865c/views/register.hbs#L6)
+1. [ReCaptcha Docs](https://developers.google.com/recaptcha/docs/display) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/3a34c4f22943c4aa23f93582bf84541a818d865c/views/register.hbs#L6)
 2. [Heroku Node.js Setup](https://devcenter.heroku.com/articles/getting-started-with-nodejs) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/3a34c4f22943c4aa23f93582bf84541a818d865c/Procfile#L1)
