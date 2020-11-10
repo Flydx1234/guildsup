@@ -128,10 +128,13 @@ An Example Chat Room:
     * I'm going to be using passport for user authentication.
     * Passport allows for authentication through a username/password, twitter, facebook, google, etc.
     * This gives the user more options to log in, and verify their identity.
-* (4 points) Deploying my site through Heroku
+* (3 points) Deploying my site through Heroku
     * Heroku is a cloud application platform.
     * Allows users to deploy and manage web apps, and has a free tier.
     * I am using this because I would like my site to be deployed outside of the courant system.
+* (1 point) Integrating ReCaptcha
+    * ReCaptcha is a turing test to differentiate robots from humans.
+    * This helps prevent spam and bots from abusing the site.
 
 
 9 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)

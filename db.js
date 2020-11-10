@@ -12,7 +12,7 @@ else{
   const fn = path.join(__dirname,"config.json");
   const data = fs.readFileSync(fn);
   const conf = JSON.parse(data);
-  uri = conf.uri
+  uri = conf.testuri;
 }
 // users
 // * our site requires authentication...

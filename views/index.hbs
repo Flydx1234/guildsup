@@ -1,10 +1,29 @@
 List of Games
-<a href = "/guilds"><img src = "https://upload.wikimedia.org/wikipedia/en/thumb/9/91/WoW_Box_Art1.jpg/220px-WoW_Box_Art1.jpg"></a>
+<div>
+  <a href = "/login" id = "loginButton"><button>Login</button></a>
 
-<table>
-{{#each arr}}
-  <tr><a href = "/guilds?name={{game}}"<td>{{game}}</td><td><img src = {{img}}></a></td>
-{{/each}}
-</table>
+  <table>
+    <tr>
+      <td>
+        <a href = "/guilds?name=WOW">World of Warcraft</a>
+      </td>
+      <td>
+        <a href = "/guilds?name=WOW"><img src = "https://upload.wikimedia.org/wikipedia/en/thumb/9/91/WoW_Box_Art1.jpg/220px-WoW_Box_Art1.jpg"></a>
+      </td>
+    </tr>
 
-<p>Can't find your game? <a href = "/addGame">Click here</a> to add it! </p>
+
+  {{#each arr}}
+    <tr>
+      <td>
+        <a href = "/guilds?name={{game}}">{{game}}</a>
+      </td>
+      <td>
+        <a href = "/guilds?name={{game}}"><img src = {{img}}></a>
+      </td>
+    </tr>
+  {{/each}}
+  </table>
+
+  <p>Can't find your game? <a href = "/addGame">Click here</a> to add it! </p>
+</div>
