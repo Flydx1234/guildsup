@@ -1,6 +1,11 @@
 List of Games
 <div>
+  {{#if user}}
+  <p> Logged in as {{user.username}} </p>
+  <a href = "/logout" id = "logoutButton"><button>Logout</button></a>
+  {{else}}
   <a href = "/login" id = "loginButton"><button>Login</button></a>
+  {{/if}}
 
   <table>
     <tr>
