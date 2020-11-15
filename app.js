@@ -138,6 +138,7 @@ app.post("/register",(req,res)=>{
   const email = req.body.email;
   const error = {}
   console.log(captcha);
+  console.log(req.body);
   axios.post(captchaUrl, undefined, {params: {
     secret: captchaSecret,
     response: captcha
