@@ -145,6 +145,7 @@ app.post("/register",(req,res)=>{
     }
   })
   .then(cres => {
+    console.log(cres);
     if(cres.success){
       if(password !== password2){
         error.msg = "Passwords not matching.";
