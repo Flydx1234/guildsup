@@ -136,48 +136,56 @@ app.post("/register",(req,res)=>{
   const password = req.body.password;
   const password2 = req.body.password2;
   const email = req.body.email;
-  const error = {}
-  axios.post(captchaUrl, undefined, {params: {
-    secret: captchaSecret,
-    response: captcha
-    }
-  })
-  .then(cres => {
-    if(cres.data.success){
-      if(password !== password2){
-        error.msg = "Passwords not matching.";
-        res.render("register",error);
+  const error = {};
+  if(password !== password2){
+    error.msg = "Passwords not matching.";
+    res.render("register",error);
+  }
+  else if(name === undefined || name.trim().length < 2){
+    error.msg = "Error, Username must be at least 2 characters long.";
+    res.render("register",error);
+  }
+  else if(password === undefined || password.trim().length < 6){
+    error.msg = "Error, Password must be at least 6 characters long.";
+    res.render("register",error);
+  }
+  else{
+    axios.post(captchaUrl, undefined, {params: {
+      secret: captchaSecret,
+      response: captcha
+      }
+    })
+    .then(cres => {
+      if(cres.data.success){
+          User.count({username:name},function(err,count){
+            if(count > 0){
+              error.msg= "Username already taken.";
+              res.render("register",error);
+            }
+            else{
+              const user = new User({
+                username: req.body.username,
+                hash: hashFunc(req.body.password),
+                status: "online"
+              });
+              user.save(function(err){
+                if(err){
+                  throw err;
+                }
+                res.redirect("/");
+              })
+            }
+          });
       }
       else{
-        User.count({username:name},function(err,count){
-          if(count > 0){
-            error.msg= "Username already taken.";
-            res.render("register",error);
-          }
-          else{
-            const user = new User({
-              username: req.body.username,
-              hash: hashFunc(req.body.password),
-              status: "online"
-            });
-            user.save(function(err){
-              if(err){
-                throw err;
-              }
-              res.redirect("/");
-            })
-          }
-        });
+        error.msg = "Failed Captcha Challenge";
+        res.render("register",error);
       }
-    }
-    else{
-      error.msg = "Failed Captcha Challenge";
-      res.render("register",error);
-    }
-  })
-  .catch(error => {
-    console.error(error)
-  });
+    })
+    .catch(error => {
+      console.error(error)
+    });
+  }
 });
 
 app.get("/logout",(req,res)=>{
@@ -231,7 +239,8 @@ app.get('/createGuild', (req,res)=>{
       throw err;
     }
     const info = {
-      games: val
+      games: val,
+      msg: req.flash("error")
     }
     res.render("createGuild",info);
   });
@@ -242,46 +251,52 @@ app.post('/createGuild',(req,res)=>{
     res.redirect("/");
   }
   else{
+    const error ={};
     const name = req.body.name;
-    Guild.countDocuments({name:name, game: req.body.game},function(err,count){
-      if(count > 0){
-        const error ={};
-        error.msg= "Guild already exists.";
-        res.render("createGuild",error);
-      }
-      else{
-        const d = new Date();
-        const guild = new Guild({
-          name: name,
-          game: req.body.game,
-          description: req.body.desc,
-          state: "public",
-          memberLimit: 50,
-          dateCreated: d.getFullYear() + "/" +  d.getMonth() + "/" + d.getDate(),
-          members: [req.user.username]
-        });
-        guild.save(function(err){
-          if(err){
-            throw err;
-          }
-          Game.update(
-            {game:req.body.game},
-            {$push: {guilds:  mongoose.Types.ObjectId(guild._id)}},
-            function (err, raw) {
-             if (err) return handleError(err);
+    if(name === undefined || name.trim().length < 2){
+      req.flash("error","Guild name must be at least 2 characters long.");
+      res.redirect("/createGuild");
+    }
+    else{
+      Guild.countDocuments({name:name, game: req.body.game},function(err,count){
+        if(count > 0){
+          req.flash("error","Guild already exists.");
+          res.redirect("/createGuild");
+        }
+        else{
+          const d = new Date();
+          const guild = new Guild({
+            name: name,
+            game: req.body.game,
+            description: req.body.desc,
+            state: "public",
+            memberLimit: 50,
+            dateCreated: d.getFullYear() + "/" +  d.getMonth() + "/" + d.getDate(),
+            members: [req.user.username]
+          });
+          guild.save(function(err){
+            if(err){
+              throw err;
             }
-          );
-          User.update(
-            {username:req.user.username},
-            {$push: {ownGuilds: guild}},
-            function (err, raw) {
-             if (err) return handleError(err);
-            }
-          );
-          res.redirect("/");
-        });
-      }
-    });
+            Game.update(
+              {game:req.body.game},
+              {$push: {guilds:  mongoose.Types.ObjectId(guild._id)}},
+              function (err, raw) {
+               if (err) return handleError(err);
+              }
+            );
+            User.update(
+              {username:req.user.username},
+              {$push: {ownGuilds: guild}},
+              function (err, raw) {
+               if (err) return handleError(err);
+              }
+            );
+            res.redirect("/");
+          });
+        }
+      });
+    }
   }
 });
 
@@ -291,23 +306,38 @@ app.get('/addGame',(req,res)=>{
 
 app.post('/addGame',(req,res)=>{
   const name = req.body.name.trim().toLowerCase();
-  Game.find({game:name},(err,val)=>{
-    if(err){
-      throw err;
+  const img = req.body.img.trim();
+  if(name === undefined || name.length < 1){
+    const err = {
+      msg: "Invalid game name"
     }
-    if(val.length <= 0){
-      const entry = new Game({
-        game: name,
-        img: req.body.img
-      });
-      entry.save(function(err){
-        if(err){
-          throw err;
-        }
-        res.redirect("/");
-      });
+    res.render("addGame",err);
+  }
+  else if(img === undefined || img.length < 1){
+    const err = {
+      msg: "Invalid img url"
     }
-  });
+    res.render("addGame",err);
+  }
+  else{
+    Game.find({game:name},(err,val)=>{
+      if(err){
+        throw err;
+      }
+      if(val.length <= 0){
+        const entry = new Game({
+          game: name,
+          img: req.body.img
+        });
+        entry.save(function(err){
+          if(err){
+            throw err;
+          }
+          res.redirect("/");
+        });
+      }
+    });
+  }
 });
 
 app.get("/user",(req,res)=>{
