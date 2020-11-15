@@ -14,5 +14,7 @@ List of Games
   {{/each}}
   </table>
 
-  <p>Can't find your game? <a href = "/addGame">Click here</a> to add it! </p>
+  {{#if user}}
+    <p>Can't find your game? <a href = "/addGame">Click here</a> to add it! </p>
+  {{/if}}
 </div>
