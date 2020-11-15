@@ -146,4 +146,7 @@ An Example Chat Room:
 
 1. [ReCaptcha Docs](https://developers.google.com/recaptcha/docs/display) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/3a34c4f22943c4aa23f93582bf84541a818d865c/views/register.hbs#L6)
 2. [Heroku Node.js Setup](https://devcenter.heroku.com/articles/getting-started-with-nodejs) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/3a34c4f22943c4aa23f93582bf84541a818d865c/Procfile#L1)
-3.[]
+3. [Passport Docs](http://www.passportjs.org/docs/authenticate/) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/master/app.js#L66-L91)
+4. [Axios Docs](https://github.com/axios/axios) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/b5947a19ccd9ff40d8f62f31bf1a987cbee6ef50/app.js#L153-L189)
+5. [Crypto Docs](https://nodejs.org/api/crypto.html) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/b5947a19ccd9ff40d8f62f31bf1a987cbee6ef50/app.js#L22-L24)
+6. [connect-flash Docs](https://www.npmjs.com/package/connect-flash) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/b5947a19ccd9ff40d8f62f31bf1a987cbee6ef50/app.js#L118-L125)
