@@ -72,6 +72,11 @@ passport.use(new LocalStrategy(
   }
 ));
 
+//middleware to add user to every template
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 
 
 
@@ -89,6 +94,7 @@ app.get('/', (req, res) => {
   });
 });
 
+//login, lougout and registration
 app.get('/login',(req,res)=>{
   const flashMsg = {
     msg: req.flash("error")
@@ -102,7 +108,6 @@ app.post('/login', passport.authenticate('local', {successRedirect: '/',
                                                    (req,res)=>{
     res.redirect("/");
 });
-
 app.get("/register",(req,res)=>{
   res.render("register");
 });
@@ -139,8 +144,12 @@ app.post("/register",(req,res)=>{
 });
 
 app.get("/logout",(req,res)=>{
-  res.render("/");
+  req.logout();
+  res.redirect("/");
 });
+
+
+//guild stuff
 app.get('/inguild', (req, res) => {
   res.render('inguild');
 });
@@ -149,21 +158,94 @@ app.post('/inguild', (req, res) => {
   res.render('inguild');
 });
 
+app.get('/notinguild', (req, res) => {
+  res.render('notinguild');
+});
+
 app.get('/guilds', (req, res) => {
   const name = req.query.name;
-  Game.find({game:name},(err,val)=>{
+  Game.findOne({game:name},(err,val)=>{
     if(err){
       throw err;
     }
-    const guilds = {
-      arr:val.guilds
+    const info = {
+      arr:[]
     }
-    res.render('guilds',guilds);
+    for(guildId of val.guilds){
+      Guild.findOne({_id: mongoose.Types.ObjectId(guildId)}, (err,val1)=>{
+        if(err){
+          throw err;
+        }
+        info.arr.push(val1);
+        if(info.arr.length === val.guilds.length){
+          res.render('guilds',info);
+        }
+      });
+    }
+    if(val.guilds.length === 0){
+      res.render('guilds',info);
+    }
   });
 });
 
-app.get('/notinguild', (req, res) => {
-  res.render('notinguild');
+app.get('/createGuild', (req,res)=>{
+  Game.find({}, (err,val)=>{
+    if(err){
+      throw err;
+    }
+    const info = {
+      games: val
+    }
+    res.render("createGuild",info);
+  });
+});
+
+app.post('/createGuild',(req,res)=>{
+  if(!req.user){
+    res.redirect("/");
+  }
+  else{
+    const name = req.body.name;
+    Guild.countDocuments({name:name, game: req.body.game},function(err,count){
+      if(count > 0){
+        const error ={};
+        error.msg= "Guild already exists.";
+        res.render("createGuild",error);
+      }
+      else{
+        const d = new Date();
+        const guild = new Guild({
+          name: name,
+          game: req.body.game,
+          description: req.body.desc,
+          state: "public",
+          memberLimit: 50,
+          dateCreated: d.getFullYear() + "/" +  d.getMonth() + "/" + d.getDate(),
+          members: [req.user.username]
+        });
+        guild.save(function(err){
+          if(err){
+            throw err;
+          }
+          Game.update(
+            {game:req.body.game},
+            {$push: {guilds:  mongoose.Types.ObjectId(guild._id)}},
+            function (err, raw) {
+             if (err) return handleError(err);
+            }
+          );
+          User.update(
+            {username:req.user.username},
+            {$push: {ownGuilds: guild}},
+            function (err, raw) {
+             if (err) return handleError(err);
+            }
+          );
+          res.redirect("/");
+        });
+      }
+    });
+  }
 });
 
 app.get('/addGame',(req,res)=>{
@@ -191,5 +273,23 @@ app.post('/addGame',(req,res)=>{
   });
 });
 
+app.get("/user",(req,res)=>{
+  if(req.user){
+    User.findOne({username:req.user.username}, (err,val)=>{
+      if(err){
+        throw err;
+      }
+      const info = {
+        username: val.username,
+        guilds: val.guilds,
+        ownGuilds: val.ownGuilds
+      }
+      res.render("user",info);
+    });
+  }
+  else{
+    res.redirect("/");
+  }
+});
 
 app.listen(PORT);

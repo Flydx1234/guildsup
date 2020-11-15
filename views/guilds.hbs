@@ -1,16 +1,13 @@
 List of guilds for the game
-
-
-
 <ul>
-  <li>
-    <form method="post" action="inguild">
-      <input type="hidden" name="name"> <!--value={{id}}-->
-      <button type="submit">
-        {{#each arr}}
-          <p>{{arr}}</p>
-        {{/each}}
-      </button>
-    </form>
-  </li>
+  {{#each arr}}
+    <li>
+        <form method="post" action="inguild">
+          <input type="hidden" name="name" value = {{_id}}>
+          <button type="submit">
+              <p>{{name}} - {{description}} 0/{{memberLimit}}</p>
+          </button>
+        </form>
+    </li>
+  {{/each}}
 <ul>

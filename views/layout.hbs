@@ -7,7 +7,13 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-	<h1>Guilds</h1>
+	<h1><a href = "/">Guilds</a></h1>
+	{{#if user}}
+	  <p> Logged in as <a href = "/user">{{user.username}}</a></p>
+	  <a href = "/logout" id = "logoutButton"><button>Logout</button></a>
+	  {{else}}
+	  <a href = "/login" id = "loginButton"><button>Login</button></a>
+  {{/if}}
 {{{ body }}}
 </body>
 </html>

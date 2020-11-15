@@ -1,2 +1,17 @@
-{{username}}
-{{guilds}}
+<ul>
+  List of guilds you're in
+  {{#each guilds}}
+    <li>{{name}} - {{game}} </li>
+  {{/each}}
+</ul>
+
+<ul>
+  List of guilds you have created
+  {{#each ownGuilds}}
+    <li>{{name}} - {{game}} </li>
+  {{/each}}
+</ul>
+
+<form method = "GET" action="/createGuild">
+  <input type = "submit" value = "Create Guild">
+</form>

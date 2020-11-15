@@ -25,8 +25,8 @@ const User = new mongoose.Schema({
   username: {type:String, required:true},
   hash: {type:String, required:true},// a password hash,
   status: {type:String, required:true},//online or offline
-  guilds: [{}], // an array of objects for guilds that the user is in, and the date that they joined
-  ownGuilds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Guild' }] //an array of guilds objects that the user created
+  guilds: [{type: Object}], // an array of objects for guilds that the user is in, and the date that they joined
+  ownGuilds: [{type: Object}] //an array of guilds objects that the user created
   },{_id: true
 },{collation: { locale: 'en', strength: 2 }});
 
@@ -40,7 +40,7 @@ const Guild = new mongoose.Schema({
   memberLimit: {type: Number, required: true},
   description: String,
   imgUrl: String,
-  members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GuildMember' }],
+  members: [{ type: String}],
   chatRooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ChatRoom' }],
   dateCreated: {type:Date,required:true}
   },{_id: true

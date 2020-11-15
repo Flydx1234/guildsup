@@ -1,22 +1,6 @@
 List of Games
 <div>
-  {{#if user}}
-  <p> Logged in as {{user.username}} </p>
-  <a href = "/logout" id = "logoutButton"><button>Logout</button></a>
-  {{else}}
-  <a href = "/login" id = "loginButton"><button>Login</button></a>
-  {{/if}}
-
   <table>
-    <tr>
-      <td>
-        <a href = "/guilds?name=WOW">World of Warcraft</a>
-      </td>
-      <td>
-        <a href = "/guilds?name=WOW"><img src = "https://upload.wikimedia.org/wikipedia/en/thumb/9/91/WoW_Box_Art1.jpg/220px-WoW_Box_Art1.jpg"></a>
-      </td>
-    </tr>
-
 
   {{#each arr}}
     <tr>
