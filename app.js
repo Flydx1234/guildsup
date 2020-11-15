@@ -12,6 +12,7 @@ const app = express();
 require("./db");
 const PORT = process.env.PORT || 3000;
 let secret;
+let captchaSecret;
 const captchaUrl = "https://www.google.com/recaptcha/api/siteverify"
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
@@ -24,6 +25,7 @@ function hashFunc(val){
 //setup secret
 if(process.env.NODE_ENV === 'PRODUCTION'){
   secret = process.env.SECRET;
+  captchaSecret = process.env.CAPTCHA_SECRET;
 }
 else{
   const fs = require("fs");
@@ -32,6 +34,7 @@ else{
   const data = fs.readFileSync(fn);
   const conf = JSON.parse(data);
   secret = conf.secret;
+  captchaSecret = conf.captchaSecret;
 }
 
 
@@ -134,9 +137,11 @@ app.post("/register",(req,res)=>{
   const password2 = req.body.password2;
   const email = req.body.email;
   const error = {}
-  axios.post(captchaUrl, {
-    secret: '6LfSjuAZAAAAAC7AUH_5F5OZQWzwGxtNC1yitYAl',
+  console.log(captcha);
+  axios.post(captchaUrl, undefined, {params: {
+    secret: captchaSecret,
     response: captcha
+    }
   })
   .then(cres => {
     if(cres.success){
