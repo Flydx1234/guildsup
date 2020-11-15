@@ -137,39 +137,38 @@ app.post("/register",(req,res)=>{
   const password2 = req.body.password2;
   const email = req.body.email;
   const error = {}
-  console.log(captcha);
-  console.log(req.body);
   axios.post(captchaUrl, undefined, {params: {
     secret: captchaSecret,
     response: captcha
     }
   })
   .then(cres => {
-    console.log(cres);
-    if(cres.success){
+    if(cres.data.success){
       if(password !== password2){
         error.msg = "Passwords not matching.";
         res.render("register",error);
       }
-      User.count({username:name},function(err,count){
-        if(count > 0){
-          error.msg= "Username already taken.";
-          res.render("register",error);
-        }
-        else{
-          const user = new User({
-            username: req.body.username,
-            hash: hashFunc(req.body.password),
-            status: "online"
-          });
-          user.save(function(err){
-            if(err){
-              throw err;
-            }
-            res.redirect("/");
-          })
-        }
-      });
+      else{
+        User.count({username:name},function(err,count){
+          if(count > 0){
+            error.msg= "Username already taken.";
+            res.render("register",error);
+          }
+          else{
+            const user = new User({
+              username: req.body.username,
+              hash: hashFunc(req.body.password),
+              status: "online"
+            });
+            user.save(function(err){
+              if(err){
+                throw err;
+              }
+              res.redirect("/");
+            })
+          }
+        });
+      }
     }
     else{
       error.msg = "Failed Captcha Challenge";
