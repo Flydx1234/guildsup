@@ -134,12 +134,12 @@ app.post("/register",(req,res)=>{
   const password2 = req.body.password2;
   const email = req.body.email;
   const error = {}
-  axios.post('captchaUrl', {
+  axios.post(captchaUrl, {
     secret: '6LfSjuAZAAAAAC7AUH_5F5OZQWzwGxtNC1yitYAl',
     response: captcha
   })
-  .then(res => {
-    if(res.success){
+  .then(cres => {
+    if(cres.success){
       if(password !== password2){
         error.msg = "Passwords not matching.";
         res.render("register",error);
