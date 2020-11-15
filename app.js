@@ -7,9 +7,12 @@ const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const flash = require('connect-flash');
+const axios = require('axios')
 const app = express();
 require("./db");
 const PORT = process.env.PORT || 3000;
+let secret;
+const captchaUrl = "https://www.google.com/recaptcha/api/siteverify"
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const Guild = mongoose.model("Guild");
@@ -17,6 +20,18 @@ const Game = mongoose.model("Game");
 const ChatRoom = mongoose.model("ChatRoom");
 function hashFunc(val){
   return crypto.createHash('sha256').update(val).digest("hex");
+}
+//setup secret
+if(process.env.NODE_ENV === 'PRODUCTION'){
+  secret = process.env.SECRET;
+}
+else{
+  const fs = require("fs");
+  const path = require("path");
+  const fn = path.join(__dirname,"config.json");
+  const data = fs.readFileSync(fn);
+  const conf = JSON.parse(data);
+  secret = conf.secret;
 }
 
 
@@ -26,7 +41,7 @@ function hashFunc(val){
 // enable sessions
 const session = require('express-session');
 const sessionOptions = {
-    secret: 'secret cookie thang (store this elsewhere!)',
+    secret: secret,
     resave: true,
     saveUninitialized: true
 };
@@ -113,33 +128,49 @@ app.get("/register",(req,res)=>{
 });
 
 app.post("/register",(req,res)=>{
+  const captcha = req.body["g-recaptcha-response"];
   const name = req.body.username;
   const password = req.body.password;
   const password2 = req.body.password2;
   const email = req.body.email;
   const error = {}
-  if(password !== password2){
-    error.msg = "Passwords not matching.";
-    res.render("register",error);
-  }
-  User.count({username:name},function(err,count){
-    if(count > 0){
-      error.msg= "Username already taken.";
-      res.render("register",error);
+  axios.post('captchaUrl', {
+    secret: '6LfSjuAZAAAAAC7AUH_5F5OZQWzwGxtNC1yitYAl',
+    response: captcha
+  })
+  .then(res => {
+    if(res.success){
+      if(password !== password2){
+        error.msg = "Passwords not matching.";
+        res.render("register",error);
+      }
+      User.count({username:name},function(err,count){
+        if(count > 0){
+          error.msg= "Username already taken.";
+          res.render("register",error);
+        }
+        else{
+          const user = new User({
+            username: req.body.username,
+            hash: hashFunc(req.body.password),
+            status: "online"
+          });
+          user.save(function(err){
+            if(err){
+              throw err;
+            }
+            res.redirect("/");
+          })
+        }
+      });
     }
     else{
-      const user = new User({
-        username: req.body.username,
-        hash: hashFunc(req.body.password),
-        status: "online"
-      });
-      user.save(function(err){
-        if(err){
-          throw err;
-        }
-        res.redirect("/");
-      })
+      error.msg = "Failed Captcha Challenge";
+      res.render("register",error);
     }
+  })
+  .catch(error => {
+    console.error(error)
   });
 });
 
