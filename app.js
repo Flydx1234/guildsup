@@ -402,6 +402,12 @@ app.get("/user",(req,res)=>{
         guilds: val.guilds,
         ownGuilds: val.ownGuilds
       }
+      val.guilds.forEach((guild,index)=>{
+        Guild.findOne({_id:guild._id},(err,guild)=>{
+          val.guilds[index].memberCount = guild.memberCount;
+        });
+      });
+      console.log(val.guilds);
       res.render("user",info);
     });
   }
