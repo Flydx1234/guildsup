@@ -15,6 +15,7 @@ let secret;
 let captchaSecret;
 const captchaUrl = "https://www.google.com/recaptcha/api/siteverify"
 const mongoose = require("mongoose");
+mongoose.set('useFindAndModify', false);
 const User = mongoose.model("User");
 const Guild = mongoose.model("Guild");
 const Game = mongoose.model("Game");
@@ -162,8 +163,8 @@ app.post("/register",(req,res)=>{
       }
     })
     .then(cres => {
-      if(cres.data.success){
-          User.count({username:name},function(err,count){
+      if(!cres.data.success){
+          User.countDocuments({username:name},function(err,count){
             if(count > 0){
               error.msg= "Username already taken.";
               res.render("register",error);
@@ -240,18 +241,15 @@ app.get('/notinguild', (req, res) => {
 });
 
 app.post('/notinguild',(req,res)=>{
-  const id = req.query.guild;
-  const memberCount = req.query.memberCount;
-  Guild.findOneAndUpdate({_id: id},{$push : {members : req.user.username}}, {$set : {memberCount: memberCount + 1}}).exec(function(err,guild){
-    if(err){
-      throw err;
-    }
+  const id = req.body.guild;
+  const memberCount = req.body.memberCount;
+  Guild.findOneAndUpdate({_id: id},{$push : {members : req.user.username}, $set : {memberCount: Number(memberCount) + 1}}, { new: true }, function(err,updated){
     User.updateOne(
       {username:req.user.username},
-      {$push: {guilds: guild}},
+      {$push: {guilds: updated}},
       function (err, raw) {
-       if (err) throw err;
-       res.redirect("/inguild?guild=" + id);
+        if (err) throw err;
+        res.redirect("/inguild?guild=" + id);
       }
     );
   });
@@ -402,13 +400,19 @@ app.get("/user",(req,res)=>{
         guilds: val.guilds,
         ownGuilds: val.ownGuilds
       }
-      val.guilds.forEach((guild,index)=>{
-        Guild.findOne({_id:guild._id},(err,guild)=>{
-          val.guilds[index].memberCount = guild.memberCount;
+      if(val.guilds.length > 0){
+        val.guilds.forEach((guild,index)=>{
+          Guild.findOne({_id:guild._id},(err,guild)=>{
+            info.guilds[index].memberCount = guild.memberCount;
+            if(index == info.guilds.length-1){
+              res.render("user",info);
+            }
+          });
         });
-      });
-      console.log(val.guilds);
-      res.render("user",info);
+      }
+      else{
+        res.render("user",info);
+      }
     });
   }
   else{
