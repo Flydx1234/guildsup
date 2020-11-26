@@ -3,5 +3,19 @@
 {{chatRoom}}
 
 <li>{{messages}}</li-->
-<p> Members </p>
-<li>Member: Messages <span>Timestamp</span></li>
+
+{{#if user}}
+  <h2>{{guild.name}}</h2>
+  <h3>{{guild.description}}</h3>
+  <p>Admins</p>
+  {{#each guild.admins}}
+    <p>{{this}}</p>
+  {{/each}}
+  <p> Members </p>
+  {{#each guild.members}}
+    <p>{{this}}</p>
+  {{/each}}
+  <li>Member: Messages <span>Timestamp</span></li>
+  {{else}}
+  <p>You need to be logged in to access this page.</p>
+{{/if}}

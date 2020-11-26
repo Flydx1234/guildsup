@@ -1,14 +1,28 @@
 <ul>
   List of guilds you're in
   {{#each guilds}}
-    <li>{{name}} - {{game}} </li>
+    <li>
+      <form method="GET" action="inguild">
+        <input type="hidden" name="guild" value = {{_id}}>
+        <button type="submit">
+          <p>{{name}} - {{game}} {{memberCount}}/{{memberLimit}} </p>
+        </button>
+      </form>
+    </li>
   {{/each}}
 </ul>
 
 <ul>
   List of guilds you have created
   {{#each ownGuilds}}
-    <li>{{name}} - {{game}} </li>
+    <li>
+      <form method="GET" action="inguild">
+        <input type="hidden" name="guild" value = {{_id}}>
+        <button type="submit">
+          <p>{{name}} - {{game}} {{memberCount}}/{{memberLimit}} </p>
+        </button>
+      </form>
+    </li>
   {{/each}}
 </ul>
 

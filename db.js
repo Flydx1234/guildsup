@@ -41,7 +41,9 @@ const Guild = new mongoose.Schema({
   description: String,
   imgUrl: String,
   members: [{ type: String}],
-  chatRooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ChatRoom' }],
+  admins: [{type:String}],
+  memberCount: {type: Number, required:true},
+  chatRooms: [{type: Object}],
   dateCreated: {type:Date,required:true}
   },{_id: true
 },{collation: { locale: 'en', strength: 2 }});
@@ -56,8 +58,8 @@ const Game = new mongoose.Schema({
 
 const ChatRoom = new mongoose.Schema({
   name: {type: String, required: true},
-  pinned:[{}], //pinned messages
-  messages: [{}] //an array of messages from users with timestamp
+  pinned:[{type: Object}], //pinned messages
+  messages: [{type: Object}] //an array of messages from users with timestamp
 },{collation: { locale: 'en', strength: 2 }})
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
 

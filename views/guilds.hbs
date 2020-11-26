@@ -2,10 +2,10 @@ List of guilds for the game
 <ul>
   {{#each arr}}
     <li>
-        <form method="post" action="inguild">
-          <input type="hidden" name="name" value = {{_id}}>
+        <form method="GET" action="inguild">
+          <input type="hidden" name="guild" value = {{_id}}>
           <button type="submit">
-              <p>{{name}} - {{description}} 0/{{memberLimit}}</p>
+              <p>{{name}} - {{description}} {{memberCount}}/{{memberLimit}}</p>
           </button>
         </form>
     </li>

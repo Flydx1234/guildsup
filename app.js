@@ -96,6 +96,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+//error handling
+app.use((err, req, res, next) => {
+     console.log('congrats you hit the error middleware');
+     console.log(err);
+});
+
 
 
 app.get('/', (req, res) => {
@@ -196,7 +202,24 @@ app.get("/logout",(req,res)=>{
 
 //guild stuff
 app.get('/inguild', (req, res) => {
-  res.render('inguild');
+  if(!req.user){
+    res.render("inguild");
+  }
+  else{
+    const id = req.query.guild;
+    Guild.findOne({_id: id}, function(err,guild){
+        if (err) { return err; }
+        const context = {
+          guild: guild
+        }
+        if(guild.members.includes(req.user.username) || guild.members.includes(req.user.username)){
+          res.render('inguild',context);
+        }
+        else{
+          res.redirect('/notinguild?guild='+guild._id);
+        }
+      });
+    }
 });
 
 app.post('/inguild', (req, res) => {
@@ -204,7 +227,34 @@ app.post('/inguild', (req, res) => {
 });
 
 app.get('/notinguild', (req, res) => {
-  res.render('notinguild');
+  const id = req.query.guild;
+  Guild.findOne({_id: id}, function(err,guild){
+    if(err){
+      throw err;
+    }
+    const context = {
+      guild: guild
+    }
+    res.render('notinguild',context);
+  });
+});
+
+app.post('/notinguild',(req,res)=>{
+  const id = req.query.guild;
+  const memberCount = req.query.memberCount;
+  Guild.findOneAndUpdate({_id: id},{$push : {members : req.user.username}}, {$set : {memberCount: memberCount + 1}}).exec(function(err,guild){
+    if(err){
+      throw err;
+    }
+    User.updateOne(
+      {username:req.user.username},
+      {$push: {guilds: guild}},
+      function (err, raw) {
+       if (err) throw err;
+       res.redirect("/inguild?guild=" + id);
+      }
+    );
+  });
 });
 
 app.get('/guilds', (req, res) => {
@@ -271,25 +321,26 @@ app.post('/createGuild',(req,res)=>{
             description: req.body.desc,
             state: "public",
             memberLimit: 50,
+            memberCount: 1,
             dateCreated: d.getFullYear() + "/" +  d.getMonth() + "/" + d.getDate(),
-            members: [req.user.username]
+            admins: [req.user.username]
           });
           guild.save(function(err){
             if(err){
               throw err;
             }
-            Game.update(
+            Game.updateOne(
               {game:req.body.game},
               {$push: {guilds:  mongoose.Types.ObjectId(guild._id)}},
               function (err, raw) {
-               if (err) return handleError(err);
+               if (err) throw err;
               }
             );
-            User.update(
+            User.updateOne(
               {username:req.user.username},
               {$push: {ownGuilds: guild}},
               function (err, raw) {
-               if (err) return handleError(err);
+               if (err) throw err;
               }
             );
             res.redirect("/");
