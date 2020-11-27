@@ -213,7 +213,7 @@ app.get('/inguild', (req, res) => {
         const context = {
           guild: guild
         }
-        if(guild.members.includes(req.user.username) || guild.members.includes(req.user.username)){
+        if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
           res.render('inguild',context);
         }
         else{
@@ -241,6 +241,9 @@ app.get('/notinguild', (req, res) => {
 });
 
 app.post('/notinguild',(req,res)=>{
+  if(!req.user){
+    res.render("/");
+  }
   const id = req.body.guild;
   const memberCount = req.body.memberCount;
   Guild.findOneAndUpdate({_id: id},{$push : {members : req.user.username}, $set : {memberCount: Number(memberCount) + 1}}, { new: true }, function(err,updated){
