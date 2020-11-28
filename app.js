@@ -425,7 +425,12 @@ app.get("/user",(req,res)=>{
 });
 
 app.get("/chatroom",(req,res)=>{
-
+  if(!req.user){
+    res.redirect("/");
+  }
+  ChatRoom.findOne({_id:req.query.id},(err,room)=>{
+    res.json(room);
+  });
 });
 
 app.post("/chatroom",(req,res)=>{
@@ -438,8 +443,6 @@ app.post("/chatroom",(req,res)=>{
 app.post("/createRoom",(req,res)=>{
   const n = req.body.name;
   const guildId = req.body.guild;
-  console.log(n);
-  console.log(guildId);
   ChatRoom.find({name:n},(err,val)=>{
     if(err){
       throw err;
@@ -452,12 +455,10 @@ app.post("/createRoom",(req,res)=>{
         if(err){
           throw err;
         }
-        console.log(entry);
         Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
           if(err){
             throw err;
           }
-          console.log(entry);
           res.json(entry);
         });
       });
