@@ -7,8 +7,10 @@ const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const flash = require('connect-flash');
-const axios = require('axios')
+const axios = require('axios');
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 require("./db");
 const PORT = process.env.PORT || 3000;
 let secret;
@@ -103,8 +105,6 @@ app.use((err, req, res, next) => {
      console.log(err);
 });
 
-
-
 app.get('/', (req, res) => {
   const searchOptions = {};
   Game.find(searchOptions,(err,val)=>{
@@ -163,7 +163,7 @@ app.post("/register",(req,res)=>{
       }
     })
     .then(cres => {
-      if(!cres.data.success){
+      if(cres.data.success){
           User.countDocuments({username:name},function(err,count){
             if(count > 0){
               error.msg= "Username already taken.";
@@ -421,6 +421,21 @@ app.get("/user",(req,res)=>{
   else{
     res.redirect("/");
   }
+});
+
+app.get("/chatroom",(req,res)=>{
+
+});
+
+app.post("/chatroom",(req,res)=>{
+  if(!req.user){
+    res.redirect("/");
+  }
+
+});
+
+app.post("/createChatroom",(req,res)=>{
+
 });
 
 app.listen(PORT);

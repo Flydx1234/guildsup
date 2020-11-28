@@ -4,18 +4,42 @@
 
 <li>{{messages}}</li-->
 
-{{#if user}}
-  <h2>{{guild.name}}</h2>
-  <h3>{{guild.description}}</h3>
-  <p>Admins</p>
-  {{#each guild.admins}}
-    <p>{{this}}</p>
-  {{/each}}
-  <p> Members </p>
-  {{#each guild.members}}
-    <p>{{this}}</p>
-  {{/each}}
-  <li>Member: Messages <span>Timestamp</span></li>
-  {{else}}
-  <p>You need to be logged in to access this page.</p>
-{{/if}}
+<div>
+  {{#if user}}
+    <h2>{{guild.name}}</h2>
+    <h3>{{guild.description}}</h3>
+    <p>Admins</p>
+    {{#each guild.admins}}
+      <p>{{this}}</p>
+    {{/each}}
+    <p> Members </p>
+    {{#each guild.members}}
+      <p>{{this}}</p>
+    {{/each}}
+    <ul>
+      {{#each guild.chatRooms}}
+        <li>
+          <form method="GET" action="showChat" class = "chatRoom">
+            <input type="hidden" name="chatRoom" value = {{this._id}}>
+            <button type="submit">
+                <p>{{this.name}}</p>
+            </button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+    {{else}}
+    <p>You need to be logged in to access this page.</p>
+  {{/if}}
+</div>
+
+<div id = "chat">
+  <div id = "messages">
+
+  </div>
+  <form method = "POST" action = "/sendMessage">
+    <input type = "text">
+    <input type = "submit">
+  </form>
+</div>
+<script src="/javascript/chatroom.js"></script>
