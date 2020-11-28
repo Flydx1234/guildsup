@@ -213,6 +213,7 @@ app.get('/inguild', (req, res) => {
         const context = {
           guild: guild
         }
+        console.log(guild);
         if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
           res.render('inguild',context);
         }
@@ -434,8 +435,34 @@ app.post("/chatroom",(req,res)=>{
 
 });
 
-app.post("/createChatroom",(req,res)=>{
-
+app.post("/createRoom",(req,res)=>{
+  const n = req.body.name;
+  const guildId = req.body.guild;
+  console.log(n);
+  console.log(guildId);
+  ChatRoom.find({name:n},(err,val)=>{
+    if(err){
+      throw err;
+    }
+    if(val.length <= 0){
+      const entry = new ChatRoom({
+        name: n
+      });
+      entry.save(function(err){
+        if(err){
+          throw err;
+        }
+        console.log(entry);
+        Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
+          if(err){
+            throw err;
+          }
+          console.log(entry);
+          res.json(entry);
+        });
+      });
+    }
+  });
 });
 
 app.listen(PORT);
