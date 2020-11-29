@@ -11,7 +11,6 @@ const axios = require('axios');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-require("./db");
 const PORT = process.env.PORT || 3000;
 let secret;
 let captchaSecret;
@@ -39,9 +38,6 @@ else{
   secret = conf.secret;
   captchaSecret = conf.captchaSecret;
 }
-
-
-
 
 
 // enable sessions
@@ -104,6 +100,41 @@ app.use((err, req, res, next) => {
      console.log('congrats you hit the error middleware');
      console.log(err);
 });
+
+
+//socket handling
+io.on('connect', function(sock){
+  console.log(sock.id,"has connected");
+  sock.on("messageSent",function(data, id, username){
+    console.log(data, id, username);
+    const d = new Date();
+    const newMessage = {
+      name: username,
+      text: data,
+      time: {
+        month: d.getMonth(),
+        day: d.getDay(),
+        year: d.getFullYear(),
+        hour: d.getHours(),
+        minute: d.getMinutes()
+      }
+    }
+
+    ChatRoom.findOneAndUpdate({_id:id},{$push:{messages:newMessage}}, {new:true}, (err,updated)=>{
+      io.emit("messageReceived",newMessage);
+    });
+  });
+  sock.on("roomCreated", function(id,anem){
+    ChatRoom.findOne({_id:id},function(err,data){
+      if(err){
+        throw err;
+      }
+      sock.broadcast.emit("roomCreated", data);
+    });
+  });
+});
+
+
 
 app.get('/', (req, res) => {
   const searchOptions = {};
@@ -452,26 +483,24 @@ app.post("/createRoom",(req,res)=>{
           throw err;
         }
         if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
-          ChatRoom.find({name:n},(err,val)=>{
+          guild.chatRooms.forEach((room)=>{
+            if(room.name === n){
+              res.end("Room already exists");
+            }
+          });
+          const entry = new ChatRoom({
+            name: n
+          });
+          entry.save(function(err){
             if(err){
               throw err;
             }
-            if(val.length <= 0){
-              const entry = new ChatRoom({
-                name: n
-              });
-              entry.save(function(err){
-                if(err){
-                  throw err;
-                }
-                Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
-                  if(err){
-                    throw err;
-                  }
-                  res.json(entry);
-                });
-              });
-            }
+            Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
+              if(err){
+                throw err;
+              }
+              res.json(entry);
+            });
           });
         }
         else{
@@ -485,4 +514,4 @@ app.post("/createRoom",(req,res)=>{
   }
 });
 
-app.listen(PORT);
+server.listen(PORT);
