@@ -436,31 +436,38 @@ app.post("/chatroom",(req,res)=>{
 });
 
 app.post("/createRoom",(req,res)=>{
+  if(!req.user){
+    res.redirect("/");
+  }
   const n = req.body.name;
   const guildId = req.body.guild;
-  console.log(n);
-  console.log(guildId);
-  ChatRoom.find({name:n},(err,val)=>{
-    if(err){
-      throw err;
-    }
-    if(val.length <= 0){
-      const entry = new ChatRoom({
-        name: n
-      });
-      entry.save(function(err){
+  Guild.find({_id:guildId},function(err,found)=>{
+    if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
+      ChatRoom.find({name:n},(err,val)=>{
         if(err){
           throw err;
         }
-        console.log(entry);
-        Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
-          if(err){
-            throw err;
-          }
-          console.log(entry);
-          res.json(entry);
-        });
+        if(val.length <= 0){
+          const entry = new ChatRoom({
+            name: n
+          });
+          entry.save(function(err){
+            if(err){
+              throw err;
+            }
+            console.log(entry);
+            Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
+              if(err){
+                throw err;
+              }
+              res.json(entry);
+            });
+          });
+        }
       });
+    }
+    else{
+      res.redirect("/");
     }
   });
 });

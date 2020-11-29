@@ -5,6 +5,7 @@ function main() {
   const chatRooms = document.getElementsByClassName("chatRoom");
   const createRoom = document.getElementById("createRoom");
   const guildName = document.getElementById("guildName").textContent;
+  const sendMessage document.getElementById("sendBox");
   createRoom.addEventListener("submit",function(event){
     event.preventDefault();
     const roomName = document.getElementById("roomName");
@@ -14,7 +15,6 @@ function main() {
     roomReq.addEventListener("load",function(){
       if(roomReq.status >= 200 && roomReq.status < 400) {
         const obj = JSON.parse(roomReq.responseText);
-        console.log(obj);
         const li = document.createElement("li");
         const form = document.createElement("form");
         const input = document.createElement("input");
@@ -35,20 +35,22 @@ function main() {
         ul.appendChild(form);
       }
     });
-
     roomReq.send(`name=${roomName.value}&guild=${guildName}`);
   });
-  /*
-  const req = new XMLHttpRequest();
-  //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  req.open("POST",postUrl);
-  req.addEventListener('load', function() {
+
+  sendBox.addEventListener("submit",function(event){
+    event.preventDefault();
+    const req = new XMLHttpRequest();
+    //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.open("POST","/sendMessage");
+    req.addEventListener('load', function() {
+    });
+    req.send();
   });
-  req.send();
 
   for(room of chatRooms){
     room.addEventListener("onsubmit",showChat(event, room));
-  }*/
+  }
 }
 
 
