@@ -1,11 +1,12 @@
-List of Games
-<div>
-  <table>
+<div id = "indexContainer" class = "container">
+  <p>List of Games</p>
+  <input type = "text" id = "gameSearch" class = "searchBar" placeholder="Search">
+  <table id = "gameList">
 
   {{#each arr}}
-    <tr>
+    <tr class = "row">
       <td>
-        <a href = "/guilds?name={{game}}">{{game}}</a>
+        <a href = "/guilds?name={{game}}" class = "gameName">{{game}}</a>
       </td>
       <td>
         <a href = "/guilds?name={{game}}"><img src = {{img}}></a>
@@ -18,3 +19,22 @@ List of Games
     <p>Can't find your game? <a href = "/addGame">Click here</a> to add it! </p>
   {{/if}}
 </div>
+
+<script>
+  function filter() {
+    const input = document.getElementById('gameSearch');
+    const term = input.value.toUpperCase();
+    const rows = Array.from(document.getElementsByClassName('row'));
+    rows.map((r)=>{
+      const a = r.querySelector(".gameName");
+      if (a.textContent.toUpperCase().indexOf(term) > -1) {
+        r.style.display = "";
+      }
+      else {
+        r.style.display = "none";
+      }
+    });
+  }
+  const search = document.getElementById("gameSearch");
+  search.addEventListener("keyup", filter);
+</script>

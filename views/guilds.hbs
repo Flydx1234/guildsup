@@ -1,18 +1,22 @@
-List of guilds for the game
-<ul>
-  {{#each arr}}
-    <li>
-        <form method="GET" action="inguild">
-          <input type="hidden" name="guild" value = {{_id}}>
-          <button type="submit">
-              <p>{{name}} - {{description}} {{memberCount}}/{{memberLimit}}</p>
-          </button>
-        </form>
-    </li>
-  {{/each}}
-  {{#if user}}
-    <form method = "GET" action="/createGuild">
-      <input type = "submit" value = "Create Guild">
-    </form>
-  {{/if}}
-<ul>
+<div class = "container">
+  <input type = "text" id = "gameSearch" class = "searchBar" placeholder="Search">
+  <p>List of guilds for {{game}}</p>
+  <a href = "/guilds?name={{game}}"><img src = {{img}}></a>
+  <ul>
+    {{#each arr}}
+      <li>
+          <form method="GET" action="inguild">
+            <input type="hidden" name="guild" value = {{_id}}>
+            <button type="submit">
+                <p>{{name}} - {{description}} {{memberCount}}/{{memberLimit}} members</p>
+            </button>
+          </form>
+      </li>
+    {{/each}}
+    {{#if user}}
+      <form method = "GET" action="/createGuild">
+        <input type = "submit" value = "Create Guild">
+      </form>
+    {{/if}}
+  <ul>
+  </div>

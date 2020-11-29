@@ -58,7 +58,6 @@ const Game = new mongoose.Schema({
 
 const ChatRoom = new mongoose.Schema({
   name: {type: String, required: true},
-  pinned:[{type: Object}], //pinned messages
   messages: [{type: Object}] //an array of messages from users with timestamp
 },{collation: { locale: 'en', strength: 2 }})
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below

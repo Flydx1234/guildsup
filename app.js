@@ -302,7 +302,9 @@ app.get('/guilds', (req, res) => {
       throw err;
     }
     const info = {
-      arr:[]
+      arr:[],
+      img:val.img,
+      game: val.game
     }
     for(guildId of val.guilds){
       Guild.findOne({_id: mongoose.Types.ObjectId(guildId)}, (err,val1)=>{

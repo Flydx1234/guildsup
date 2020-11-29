@@ -9,15 +9,17 @@
 
 </head>
 <body>
-	<h1><a href = "/">Guilds</a></h1>
-	{{#if user}}
-		<div id = "loggedInAs">
-		  <p> Logged in as <a href = "/user" id = "username">{{user.username}}</a></p>
-		  <a href = "/logout" id = "logoutButton"><button>Logout</button></a>
-		</div>
-	  {{else}}
-	  <a href = "/login" id = "loginButton"><button>Login</button></a>
-  {{/if}}
+	<nav>
+		<h1><a href = "/">Guilds</a></h1>
+		{{#if user}}
+			<div id = "loggedInAs">
+			  <p> Logged in as <a href = "/user" id = "username">{{user.username}}</a></p>
+			  <a href = "/logout" id = "logoutButton"><button>Logout</button></a>
+			</div>
+		  {{else}}
+		  <a href = "/login" id = "loginButton"><button>Login</button></a>
+	  {{/if}}
+	</nav>
 {{{ body }}}
 </body>
 </html>

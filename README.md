@@ -18,9 +18,10 @@ The application will store Users, Guilds, and Games, and Chat
 * users can be in multiple guilds
 * one guild can have multiple users
 * each guild can only revolve around 1 game
+* one game can have multiple guilds
 * a user can create multiple guilds of different games
-* a user can only create 1 guild per game
-* a guild can only have many chat rooms
+* a user can only create many guilds per game
+* a guild can have many chat rooms
 * a chat room can only belong to one guild
 
 An Example User:
@@ -45,10 +46,12 @@ An Example Guild:
   description: "We raiding all day",
   imgUrl: img.png,
   memberLimit: 50,
+  memberCount : 3,
   members: [
-    { name: "player1", joinDate: //timestamp},
+    { name:"player1", joinDate: //timestamp},
     { name: "player2", joinDate: //timestamp},
   ],
+  admins: ["admin"]
   chatRooms: //array of chatrooms that belong to the guild
   createdAt: // timestamp
 }
@@ -59,6 +62,7 @@ An Example Game:
 ```javascript
 {
   game: "WoW",
+  img: "image.com", //link image that will be shown on the landing page
   guilds: //array of guilds that are related to WoW
 }
 ```

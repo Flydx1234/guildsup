@@ -12,14 +12,24 @@ img{
 a{
 	color: white;
 }
+
+nav{
+	position: fixed;
+	display:block;
+	width: 100%;
+}
+
+.container{
+	padding-top: 50px;
+}
 #loginButton{
 	float: right;
 }
 
 #loggedInAs{
 	position:fixed;
-	bottom: 0;
-
+	top: 0;
+	right: 0;
 }
 #memberContainer{
 	float:right;
@@ -37,6 +47,12 @@ a{
 	justify-content: center;
 	align-items: center;
 }
+
+#indexContainer{
+	display:flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
 .notVisible{
 	visibility: hidden;
 }
@@ -44,4 +60,8 @@ a{
 
 .hidden{
 	display:none !important;
+}
+
+.searchBar{
+	margin: auto;
 }
