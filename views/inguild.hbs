@@ -9,14 +9,18 @@
     <h2>{{guild.name}}</h2>
     <div class = "hidden" id = "guildName">{{guild._id}}</div>
     <h3>{{guild.description}}</h3>
-    <p>Admins</p>
-    {{#each guild.admins}}
-      <p>{{this}}</p>
-    {{/each}}
-    <p> Members </p>
-    {{#each guild.members}}
-      <p>{{this}}</p>
-    {{/each}}
+    <div id = "memberContainer">
+      <div id = "guildMembers">
+        <h4>Admins</h4>
+        {{#each guild.admins}}
+          <p>{{this}}</p>
+        {{/each}}
+        <h4> Members </h4>
+        {{#each guild.members}}
+          <p>{{this}}</p>
+        {{/each}}
+      </div>
+    </div>
     <h3>Rooms</h3>
     <ul id = "chatRoomList">
       {{#each guild.chatRooms}}
@@ -34,6 +38,7 @@
       <input type = "text" name="rName" id = "roomName">
       <input type = "submit" value = "Create Room">
     </form>
+
     <div id = "chat" class = "hidden">
       <table id = "messages">
 

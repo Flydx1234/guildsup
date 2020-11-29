@@ -33,13 +33,12 @@ function main() {
   });
 
   socket.on("messageReceived",function(data){
-    console.log(data);
     document.createElement("tr");
     const tr = document.createElement("tr");
     const sender = document.createElement("td");
     const sentText = document.createElement("td");
     const sentTime = document.createElement("td");
-    sender.appendChild(document.createTextNode(data.name));
+    sender.appendChild(document.createTextNode(data.name + ":"));
     sentText.appendChild(document.createTextNode(data.text));
     sentTime.appendChild(document.createTextNode(`Today at ${data.time.hour}:${data.time.minute}`));
     tr.appendChild(sender);
@@ -77,7 +76,7 @@ function showChat(event){
         const sender = document.createElement("td");
         const sentText = document.createElement("td");
         const sentTime = document.createElement("td");
-        sender.appendChild(document.createTextNode(mess.name));
+        sender.appendChild(document.createTextNode(mess.name + ":"));
         sentText.appendChild(document.createTextNode(mess.text));
         const sentDate = `${mess.time.month}/${mess.time.day}/${mess.time.year}`;
         if(sentDate === today){

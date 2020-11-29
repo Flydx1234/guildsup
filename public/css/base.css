@@ -1,9 +1,7 @@
 body {
 	font-family: sans-serif;
-}
-
-#loginButton{
-	float: right;
+	background-color: black;
+	color:white;
 }
 
 img{
@@ -11,11 +9,39 @@ img{
 	width: 300px;
 }
 
+a{
+	color: white;
+}
+#loginButton{
+	float: right;
+}
+
+#loggedInAs{
+	position:fixed;
+	bottom: 0;
+
+}
+#memberContainer{
+	float:right;
+}
+#guildMembers{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	padding:100px;
+}
+
+#chat{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 .notVisible{
 	visibility: hidden;
 }
 
 
 .hidden{
-	display:none;
+	display:none !important;
 }

@@ -165,10 +165,16 @@ app.post('/login', passport.authenticate('local', {successRedirect: '/',
     res.redirect("/");
 });
 app.get("/register",(req,res)=>{
+  if(req.user){
+    res.redirect("/");
+  }
   res.render("register");
 });
 
 app.post("/register",(req,res)=>{
+  if(req.user){
+    res.redirect("/");
+  }
   const captcha = req.body["g-recaptcha-response"];
   const name = req.body.username;
   const password = req.body.password;
@@ -388,38 +394,43 @@ app.get('/addGame',(req,res)=>{
 });
 
 app.post('/addGame',(req,res)=>{
-  const name = req.body.name.trim().toLowerCase();
-  const img = req.body.img.trim();
-  if(name === undefined || name.length < 1){
-    const err = {
-      msg: "Invalid game name"
+  if(req.user){
+    const name = req.body.name.trim().toLowerCase();
+    const img = req.body.img.trim();
+    if(name === undefined || name.length < 1){
+      const err = {
+        msg: "Invalid game name"
+      }
+      res.render("addGame",err);
     }
-    res.render("addGame",err);
-  }
-  else if(img === undefined || img.length < 1){
-    const err = {
-      msg: "Invalid img url"
+    else if(img === undefined || img.length < 1){
+      const err = {
+        msg: "Invalid img url"
+      }
+      res.render("addGame",err);
     }
-    res.render("addGame",err);
+    else{
+      Game.find({game:name},(err,val)=>{
+        if(err){
+          throw err;
+        }
+        if(val.length <= 0){
+          const entry = new Game({
+            game: name,
+            img: req.body.img
+          });
+          entry.save(function(err){
+            if(err){
+              throw err;
+            }
+            res.redirect("/");
+          });
+        }
+      });
+    }
   }
   else{
-    Game.find({game:name},(err,val)=>{
-      if(err){
-        throw err;
-      }
-      if(val.length <= 0){
-        const entry = new Game({
-          game: name,
-          img: req.body.img
-        });
-        entry.save(function(err){
-          if(err){
-            throw err;
-          }
-          res.redirect("/");
-        });
-      }
-    });
+    res.redirect("/");
   }
 });
 
