@@ -34,11 +34,11 @@
       <input type = "text" name="rName" id = "roomName">
       <input type = "submit" value = "Create Room">
     </form>
-    <div id = "chat">
-      <div id = "messages">
+    <div id = "chat" class = "hidden">
+      <table id = "messages">
 
-      </div>
-      <form method = "POST" action = "/sendMessage" id = "sendBox">
+      </table>
+      <form method = "POST" id = "sendMessage">
         <input type = "text">
         <input type = "submit" value = "Send">
       </form>

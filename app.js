@@ -425,7 +425,12 @@ app.get("/user",(req,res)=>{
 });
 
 app.get("/chatroom",(req,res)=>{
-
+  if(!req.user){
+    res.redirect("/");
+  }
+  ChatRoom.findOne({_id:req.query.id},(err,room)=>{
+    res.json(room);
+  });
 });
 
 app.post("/chatroom",(req,res)=>{

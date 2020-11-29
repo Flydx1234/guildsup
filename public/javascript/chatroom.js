@@ -48,21 +48,44 @@ function main() {
     req.send();
   });
 
+  /*const req = new XMLHttpRequest();
+  //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  req.open("POST","/chatRoom");
+  req.addEventListener('load', function() {
+  });
+  req.send();*/
   for(room of chatRooms){
-    room.addEventListener("onsubmit",showChat(event, room));
+    room.addEventListener("submit",showChat(event, room));
   }
 }
 
 
 function showChat(event, room){
   event.preventDefault();
+  document.getElementById("chat").classList.remove("hidden");
   while(messages.firstChild){
     messages.removeChild(messages.firstChild);
   }
   const _id = room.firstElementChild.value;
   const req = new XMLHttpRequest();
-  req.open("GET",getUrl);
+  req.open("GET",`/chatRoom?id=${_id}`);
   req.addEventListener('load', function() {
+    if(req.status >= 200 && req.status < 400) {
+      const info = JSON.parse(req.responseText);
+      info.messages.forEach((mess)=>{
+        const tr = document.createElement("tr");
+        const sender = document.createElement("td");
+        const sentText = document.createElement("td");
+        const sentTime = document.createElement("td");
+        sender.appendChild(document.createTextNode(mess.name));
+        sentText.appendChild(document.createTextNode(mess.text));
+        sentTime.appendChild(document.createTextNode(mess.time));
+        tr.appendChild(sender);
+        tr.appendChild(sentText);
+        tr.appendChild(sentTime);
+        messages.appendChild(tr);
+      });
+    }
   });
   req.send();
 }
