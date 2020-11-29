@@ -5,7 +5,7 @@ function main() {
   const chatRooms = document.getElementsByClassName("chatRoom");
   const createRoom = document.getElementById("createRoom");
   const guildName = document.getElementById("guildName").textContent;
-  const sendMessage document.getElementById("sendBox");
+  const sendMessage = document.getElementById("sendMessage");
   createRoom.addEventListener("submit",function(event){
     event.preventDefault();
     const roomName = document.getElementById("roomName");
@@ -38,40 +38,36 @@ function main() {
     roomReq.send(`name=${roomName.value}&guild=${guildName}`);
   });
 
-  sendBox.addEventListener("submit",function(event){
+  sendMessage.addEventListener("submit",function(event){
     event.preventDefault();
-    const req = new XMLHttpRequest();
+    /*const req = new XMLHttpRequest();
     //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.open("POST","/sendMessage");
     req.addEventListener('load', function() {
     });
-    req.send();
+    req.send();*/
+    console.log(messages.chatRoomId);
   });
 
-  /*const req = new XMLHttpRequest();
-  //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  req.open("POST","/chatRoom");
-  req.addEventListener('load', function() {
-  });
-  req.send();*/
   for(room of chatRooms){
-    room.addEventListener("submit",showChat(event, room));
+    room.addEventListener("submit",showChat);
   }
 }
 
 
-function showChat(event, room){
+function showChat(event){
   event.preventDefault();
   document.getElementById("chat").classList.remove("hidden");
   while(messages.firstChild){
     messages.removeChild(messages.firstChild);
   }
-  const _id = room.firstElementChild.value;
+  const _id = event.currentTarget.firstElementChild.value;
   const req = new XMLHttpRequest();
   req.open("GET",`/chatRoom?id=${_id}`);
   req.addEventListener('load', function() {
     if(req.status >= 200 && req.status < 400) {
       const info = JSON.parse(req.responseText);
+      messages.chatRoomId = info._id;
       info.messages.forEach((mess)=>{
         const tr = document.createElement("tr");
         const sender = document.createElement("td");

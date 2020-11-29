@@ -213,7 +213,6 @@ app.get('/inguild', (req, res) => {
         const context = {
           guild: guild
         }
-        console.log(guild);
         if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
           res.render('inguild',context);
         }
@@ -441,40 +440,49 @@ app.post("/chatroom",(req,res)=>{
 });
 
 app.post("/createRoom",(req,res)=>{
-  if(!req.user){
-    res.redirect("/");
-  }
-  const n = req.body.name;
-  const guildId = req.body.guild;
-  Guild.find({_id:guildId},function(err,found)=>{
-    if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
-      ChatRoom.find({name:n},(err,val)=>{
+  if(req.user){
+    const n = req.body.name;
+    const guildId = req.body.guild;
+    if(n == undefined || guildId == undefined || n.trim().length <= 0 || guildId.trim().length <= 0){
+      res.end('Error');
+    }
+    else{
+      Guild.findOne({_id:guildId},function(err,guild){
         if(err){
           throw err;
         }
-        if(val.length <= 0){
-          const entry = new ChatRoom({
-            name: n
-          });
-          entry.save(function(err){
+        if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
+          ChatRoom.find({name:n},(err,val)=>{
             if(err){
               throw err;
             }
-            console.log(entry);
-            Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
-              if(err){
-                throw err;
-              }
-              res.json(entry);
-            });
+            if(val.length <= 0){
+              const entry = new ChatRoom({
+                name: n
+              });
+              entry.save(function(err){
+                if(err){
+                  throw err;
+                }
+                Guild.findOneAndUpdate({_id:guildId}, {$push : {chatRooms : entry}},function(err,updated){
+                  if(err){
+                    throw err;
+                  }
+                  res.json(entry);
+                });
+              });
+            }
           });
+        }
+        else{
+          res.redirect("/");
         }
       });
     }
-    else{
-      res.redirect("/");
-    }
-  });
+  }
+  else{
+    res.redirect("/");
+  }
 });
 
 app.listen(PORT);
