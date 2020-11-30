@@ -71,7 +71,7 @@ function showChat(event){
       const info = JSON.parse(req.responseText);
       messages.chatRoomId = info._id;
       info.messages.forEach((mess)=>{
-        const today = `${d.getMonth()}/${d.getDay()}/${d.getFullYear()}`;
+        const today = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
         const tr = document.createElement("tr");
         const sender = document.createElement("td");
         const sentText = document.createElement("td");
@@ -83,7 +83,7 @@ function showChat(event){
           sentTime.appendChild(document.createTextNode(`Today at ${mess.time.hour}:${mess.time.minute}`));
         }
         else{
-          sentTime.appendchild(`${mess.time.month}/${mess.time.day}/${mess.time.year}`);
+          sentTime.appendChild(document.createTextNode(`${mess.time.month}/${mess.time.day}/${mess.time.year}`));
         }
         tr.appendChild(sender);
         tr.appendChild(sentText);

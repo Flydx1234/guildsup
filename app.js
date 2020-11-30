@@ -112,8 +112,8 @@ io.on('connect', function(sock){
       name: username,
       text: data,
       time: {
-        month: d.getMonth(),
-        day: d.getDay(),
+        month: d.getMonth() + 1,
+        day: d.getDate(),
         year: d.getFullYear(),
         hour: d.getHours(),
         minute: d.getMinutes()
@@ -362,7 +362,7 @@ app.post('/createGuild',(req,res)=>{
             state: "public",
             memberLimit: 50,
             memberCount: 1,
-            dateCreated: d.getFullYear() + "/" +  d.getMonth() + "/" + d.getDate(),
+            dateCreated: d.getFullYear() + "/" +  d.getMonth() + 1 + "/" + d.getDate(),
             admins: [req.user.username]
           });
           guild.save(function(err){
