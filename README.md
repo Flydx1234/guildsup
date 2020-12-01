@@ -20,7 +20,7 @@ The application will store Users, Guilds, and Games, and Chat
 * each guild can only revolve around 1 game
 * one game can have multiple guilds
 * a user can create multiple guilds of different games
-* a user can only create many guilds per game
+* a user can only create 1 guild per game (not implemented for final project)
 * a guild can have many chat rooms
 * a chat room can only belong to one guild
 
@@ -42,10 +42,10 @@ An Example Guild:
 {
   guildName: "WoW Raiders",
   game: "Wow",
-  state: "private",
+  state: "private", //not in use for the final project
   description: "We raiding all day",
-  imgUrl: img.png,
-  memberLimit: 50,
+  imgUrl: img.png, //not in use for the final project
+  memberLimit: 50, //not in use for the final project
   memberCount : 3,
   members: [
     { name:"player1", joinDate: //timestamp},
@@ -53,7 +53,7 @@ An Example Guild:
   ],
   admins: ["admin"]
   chatRooms: //array of chatrooms that belong to the guild
-  createdAt: // timestamp
+  createdAt: // timestamp //not in use for the final project
 }
 ```
 
@@ -97,7 +97,7 @@ An Example Chat Room:
 
 ![list](documentation/register.png)
 
-/user - page that lists the user's guilds and allows them to change password/email if logged in
+/user - page that lists the user's guilds and (allows them to change password/email if logged in - not implemented in final project)
 ![list](documentation/user.png)
 
 /inguild - page shown if user is in the guild
@@ -120,11 +120,12 @@ An Example Chat Room:
 
 1. as non-registered user, I can register a new account with the site
 2. as non-registered user, I can see the list of games and Guilds
-3. as non-registered user, I can see other user's profiles
+3. as non-registered user, I can see other user's profiles (not implemented in final project)
 4. as a user, I can log in to the site
 5. as a user, I can create or join a guild
 6. as a user, I can add a game to the overall list of games
 7. as a guild member, I can see the guild members and chat in the chatroom
+8. as a guild member, I can send messages to the chat in the chatroom
 
 ## Research Topics
 
@@ -142,7 +143,7 @@ An Example Chat Room:
     * Required the use of axios to send a post request
 
 
-9 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
+11 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
 
 
 ## [Link to Initial Main Project File](app.js)

@@ -95,18 +95,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-//error handling
-app.use((err, req, res, next) => {
-     console.log('congrats you hit the error middleware');
-     console.log(err);
-});
-
 
 //socket handling
 io.on('connect', function(sock){
-  console.log(sock.id,"has connected");
   sock.on("messageSent",function(data, id, username){
-    console.log(data, id, username);
     const d = new Date();
     const newMessage = {
       name: username,
