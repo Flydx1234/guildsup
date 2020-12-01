@@ -20,40 +20,67 @@ nav{
 	height: 50px;
 }
 
-.container{
-	padding-top: 50px;
-}
 #loginButton{
 	float: right;
+	margin-right: 30px;
 }
 
 #loggedInAs{
 	position:fixed;
 	top: 0;
 	right: 0;
+	margin-right: 30px;
 }
 #memberContainer{
-	float:right;
+	align-self: flex-end;
 }
 #guildMembers{
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
-	padding:100px;
-}
+	align-items: flex-start;
 
+}
+#roomList{
+	padding-left: 30px;
+}
+#members{
+	padding-right: 70px;
+	padding-top: 50px;
+}
 #chat{
-	display:flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
+#sendMessage{
+	text-align: center;
+}
 
-#indexContainer{
+#messages{
+	width:60vw;
+}
+.overFlowY{
+	height:90vh;
+	overflow-y:auto;
+	width: 66vw;
+}
+.overFlowY::-webkit-scrollbar {
+  width: 1em;
+}
+
+.overFlowY::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.8);
+}
+
+.overFlowY::-webkit-scrollbar-thumb {
+  background-color: black;
+  outline: 1px solid slategrey;
+}
+/*#indexContainer{
 	display:flex;
 	flex-direction: column;
 	align-items: flex-start;
-}
+}*/
 .notVisible{
 	visibility: hidden;
 }
@@ -65,4 +92,22 @@ nav{
 
 .searchBar{
 	margin: auto;
+}
+
+.container{
+	padding-top: 50px;
+	display:flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.containerRow{
+	padding-top: 50px;
+	display:flex;
+	justify-content: space-between;
+}
+
+.member{
+	padding:0px;
+	margin:0px;
 }

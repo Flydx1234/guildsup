@@ -1,10 +1,11 @@
-let chat, messages;
+let chat, messages, overFlowY;
 const d = new Date();
 const socket = io();
 
 function main() {
   chat = document.getElementById("chat");
   messages = document.getElementById("messages");
+  overFlowY = document.querySelector(".overFlowY");
   const chatRooms = document.getElementsByClassName("chatRoom");
   const createRoomForm = document.getElementById("createRoom");
   const guildName = document.getElementById("guildName").textContent;
@@ -89,6 +90,7 @@ function showChat(event){
         tr.appendChild(sentText);
         tr.appendChild(sentTime);
         messages.appendChild(tr);
+        overFlowY.scrollTop = overFlowY.scrollHeight;
       });
     }
   });

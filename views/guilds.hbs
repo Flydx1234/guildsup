@@ -1,14 +1,14 @@
 <div class = "container">
-  <input type = "text" id = "gameSearch" class = "searchBar" placeholder="Search">
+  <input type = "text" id = "guildSearch" class = "searchBar" placeholder="Search">
   <p>List of guilds for {{game}}</p>
   <a href = "/guilds?name={{game}}"><img src = {{img}}></a>
   <ul>
     {{#each arr}}
-      <li>
+      <li class = "guild">
           <form method="GET" action="inguild">
             <input type="hidden" name="guild" value = {{_id}}>
             <button type="submit">
-                <p>{{name}} - {{description}} {{memberCount}}/{{memberLimit}} members</p>
+                <p> <span class = "guildName">{{name}}</span> - {{description}} {{memberCount}}/{{memberLimit}} members</p>
             </button>
           </form>
       </li>
@@ -19,4 +19,23 @@
       </form>
     {{/if}}
   <ul>
-  </div>
+</div>
+
+<script>
+  function filter() {
+    const input = document.getElementById('guildSearch');
+    const term = input.value.toUpperCase();
+    const rows = Array.from(document.getElementsByClassName('guild'));
+    rows.map((r)=>{
+      const a = r.querySelector(".guildName");
+      if (a.textContent.toUpperCase().indexOf(term) > -1) {
+        r.style.display = "";
+      }
+      else {
+        r.style.display = "none";
+      }
+    });
+  }
+  const search = document.getElementById("guildSearch");
+  search.addEventListener("keyup", filter);
+</script>
