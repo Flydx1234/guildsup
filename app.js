@@ -318,6 +318,7 @@ app.get('/guilds', (req, res) => {
       });
     }
     if(val.guilds.length === 0){
+      info.sort();
       res.render('guilds',info);
     }
   });
