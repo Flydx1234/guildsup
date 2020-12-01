@@ -1,4 +1,4 @@
-let chat, messages, overFlowY;
+let chat, messages, overFlowY, message;
 const d = new Date();
 const socket = io();
 
@@ -22,6 +22,7 @@ function main() {
         const obj = JSON.parse(roomReq.responseText);
         createRoom(obj);
         socket.emit("roomCreated", obj._id);
+        roomName.value = "";
       }
     });
     roomReq.send(`name=${roomName.value}&guild=${guildName}`);
@@ -29,8 +30,8 @@ function main() {
 
   sendMessage.addEventListener("submit",function(event){
     event.preventDefault();
-    const message = document.getElementById("message").value;
-    socket.emit("messageSent", message, messages.chatRoomId, username.textContent);
+    message = document.getElementById("message");
+    socket.emit("messageSent", message.value, messages.chatRoomId, username.textContent);
   });
 
   socket.on("messageReceived",function(data){
@@ -46,6 +47,8 @@ function main() {
     tr.appendChild(sentText);
     tr.appendChild(sentTime);
     messages.appendChild(tr);
+    message.value = "";
+    overFlowY.scrollTop = overFlowY.scrollHeight;
   });
 
   socket.on("roomCreated", function(data){
@@ -54,6 +57,7 @@ function main() {
 
   for(room of chatRooms){
     room.addEventListener("submit",showChat);
+    room.querySelector("button").style.backgroundColor = "gainsboro";
   }
 }
 
@@ -65,6 +69,7 @@ function showChat(event){
     messages.removeChild(messages.firstChild);
   }
   const _id = event.currentTarget.firstElementChild.value;
+  event.currentTarget.querySelector("button").style.backgroundColor = "gainsboro";
   const req = new XMLHttpRequest();
   req.open("GET",`/chatRoom?id=${_id}`);
   req.addEventListener('load', function() {
@@ -115,7 +120,8 @@ function createRoom(obj){
     button.class = "showChat";
     button.appendChild(document.createTextNode(obj.name));
     form.appendChild(button);
-    ul.appendChild(form);
+    li.appendChild(form);
+    ul.appendChild(li);
     form.addEventListener("submit",showChat);
 }
 
