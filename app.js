@@ -355,6 +355,7 @@ app.post('/createGuild',(req,res)=>{
         }
         else{
           const d = new Date();
+          const month = d.getMonth() + 1;
           const guild = new Guild({
             name: name,
             game: req.body.game,
@@ -362,7 +363,7 @@ app.post('/createGuild',(req,res)=>{
             state: "public",
             memberLimit: 50,
             memberCount: 1,
-            dateCreated: d.getFullYear() + "/" +  d.getMonth() + 1 + "/" + d.getDate(),
+            dateCreated: d.getFullYear() + "/" +  month + "/" + d.getDate(),
             admins: [req.user.username]
           });
           guild.save(function(err){
