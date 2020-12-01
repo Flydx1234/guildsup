@@ -313,7 +313,7 @@ app.get('/guilds', (req, res) => {
         }
         info.arr.push(val1);
         if(info.arr.length === val.guilds.length){
-          info.sort();
+          info.arr.sort();
           res.render('guilds',info);
         }
       });
