@@ -129,7 +129,7 @@ An Example Chat Room:
 
 ## Research Topics
 
-* (5 points) Integrate user authentication
+* (3 points) Integrate user authentication
     * I'm going to be using passport for user authentication.
     * Passport allows for authentication through a username/password, twitter, facebook, google, etc.
     * This gives the user more options to log in, and verify their identity.
@@ -137,10 +137,13 @@ An Example Chat Room:
     * Heroku is a cloud application platform.
     * Allows users to deploy and manage web apps, and has a free tier.
     * I am using this because I would like my site to be deployed outside of the courant system.
-* (3 point) Integrating ReCaptcha and Axios
+* (4 point) Integrating ReCaptcha and Axios
     * ReCaptcha is a turing test to differentiate robots from humans.
     * This helps prevent spam and bots from abusing the site.
     * Required the use of axios to send a post request
+* (1 point) Integrating connect-flash
+    * Allows the sending of one time messages to the webpage.
+    * Used for sending error messages to the user for some forms such as registration.
 
 
 11 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
