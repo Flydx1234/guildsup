@@ -24,6 +24,9 @@ function main() {
         socket.emit("roomCreated", obj._id);
         roomName.value = "";
       }
+      else{
+        roomName.value = "";
+      }
     });
     roomReq.send(`name=${roomName.value}&guild=${guildName}`);
   });

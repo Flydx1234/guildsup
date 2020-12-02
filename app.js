@@ -479,7 +479,7 @@ app.post("/chatroom",(req,res)=>{
 
 app.post("/createRoom",(req,res)=>{
   if(req.user){
-    const n = req.body.name;
+    let n = req.body.name;
     const guildId = req.body.guild;
     if(n == undefined || guildId == undefined || n.trim().length <= 0 || guildId.trim().length <= 0){
       res.end('Error');
@@ -490,9 +490,12 @@ app.post("/createRoom",(req,res)=>{
           throw err;
         }
         if(guild.members.includes(req.user.username) || guild.admins.includes(req.user.username)){
+          let count = 1;
+          let original = n;
           guild.chatRooms.forEach((room)=>{
             if(room.name === n){
-              res.end("Room already exists");
+              n = original + "(" + count + ")";
+              count ++;
             }
           });
           const entry = new ChatRoom({
