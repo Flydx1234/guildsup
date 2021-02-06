@@ -18,9 +18,10 @@ The application will store Users, Guilds, and Games, and Chat
 * users can be in multiple guilds
 * one guild can have multiple users
 * each guild can only revolve around 1 game
+* one game can have multiple guilds
 * a user can create multiple guilds of different games
-* a user can only create 1 guild per game
-* a guild can only have many chat rooms
+* a user can only create 1 guild per game (not implemented for final project)
+* a guild can have many chat rooms
 * a chat room can only belong to one guild
 
 An Example User:
@@ -41,16 +42,18 @@ An Example Guild:
 {
   guildName: "WoW Raiders",
   game: "Wow",
-  state: "private",
+  state: "private", //not in use for the final project
   description: "We raiding all day",
-  imgUrl: img.png,
-  memberLimit: 50,
+  imgUrl: img.png, //not in use for the final project
+  memberLimit: 50, //not in use for the final project
+  memberCount : 3,
   members: [
-    { name: "player1", joinDate: //timestamp},
+    { name:"player1", joinDate: //timestamp},
     { name: "player2", joinDate: //timestamp},
   ],
+  admins: ["admin"]
   chatRooms: //array of chatrooms that belong to the guild
-  createdAt: // timestamp
+  createdAt: // timestamp //not in use for the final project
 }
 ```
 
@@ -59,6 +62,7 @@ An Example Game:
 ```javascript
 {
   game: "WoW",
+  img: "image.com", //link image that will be shown on the landing page
   guilds: //array of guilds that are related to WoW
 }
 ```
@@ -93,7 +97,7 @@ An Example Chat Room:
 
 ![list](documentation/register.png)
 
-/user - page that lists the user's guilds and allows them to change password/email if logged in
+/user - page that lists the user's guilds and (allows them to change password/email if logged in - not implemented in final project)
 ![list](documentation/user.png)
 
 /inguild - page shown if user is in the guild
@@ -116,32 +120,12 @@ An Example Chat Room:
 
 1. as non-registered user, I can register a new account with the site
 2. as non-registered user, I can see the list of games and Guilds
-3. as non-registered user, I can see other user's profiles
+3. as non-registered user, I can see other user's profiles (not implemented in final project)
 4. as a user, I can log in to the site
 5. as a user, I can create or join a guild
 6. as a user, I can add a game to the overall list of games
 7. as a guild member, I can see the guild members and chat in the chatroom
-
-## Research Topics
-
-* (5 points) Integrate user authentication
-    * I'm going to be using passport for user authentication.
-    * Passport allows for authentication through a username/password, twitter, facebook, google, etc.
-    * This gives the user more options to log in, and verify their identity.
-* (4 points) Deploying my site through Heroku
-    * Heroku is a cloud application platform.
-    * Allows users to deploy and manage web apps, and has a free tier.
-    * I am using this because I would like my site to be deployed outside of the courant system.
-
-
-9 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
+8. as a guild member, I can send messages to the chat in the chatroom
 
 
 ## [Link to Initial Main Project File](app.js)
-
-## Annotations / References Used
-
-(___TODO__: list any tutorials/references/etc. that you've based your code off of_)
-
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)

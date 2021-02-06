@@ -1,0 +1,12 @@
+<div class = "container">
+  {{#if user}}
+    <form method = "POST" action = "/addGame">
+      Game Name: <input type = "text" name = "name"> <br>
+      Img URL: <input type = "text" name = "img">
+      <input type = "submit">
+    </form>
+    {{msg}}
+    {{else}}
+    <p>You need to be logged in to access this page.</p>
+  {{/if}}
+</div>

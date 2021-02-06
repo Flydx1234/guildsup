@@ -1,8 +1,14 @@
-<form method="post" action="">
-  <input type = "hidden" value = {{game}} name = "game">
-  Guild Name: <input type="text" name="name">
-  Guild Img Url: <input type="text" name="img">
-  Guild Description: <input type="text" name="desc">
-  <button type="submit">
-  </button>
-</form>
+<div class = "container">
+  <form method="post" action="" id="register">
+    Username: <input type="text" name="username" id="username"> </br>
+    Password: <input type="text" name="password" id="password"> </br>
+    Confirm Password: <input type="text" name="password2" id="password2"> </br>
+    Email: <input type="text" name="email" id="email"> </br>
+    <div class="g-recaptcha" data-sitekey="6LfSjuAZAAAAAC7AUH_5F5OZQWzwGxtNC1yitYAl"></div> <br/>
+    <input type="submit" value="Register" name="register">
+  </form>
+  {{msg}}
+</div>
+<script>
+  document.getElementById("loginButton").style.display = "none";
+</script>

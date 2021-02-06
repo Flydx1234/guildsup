@@ -3,5 +3,62 @@
 {{chatRoom}}
 
 <li>{{messages}}</li-->
-<p> Members </p>
-<li>Member: Messages <span>Timestamp</span></li>
+
+<div class = "containerRow">
+  {{#if user}}
+    <div id = "rooms">
+      <h2>{{guild.name}}</h2>
+      <h3>{{guild.description}}</h3>
+      <div id= "roomList">
+        <h3>Rooms</h3>
+        <ul id = "chatRoomList">
+          {{#each guild.chatRooms}}
+            <li>
+              <form method="GET" class = "chatRoom">
+                <input type="hidden" name="chatRoom" value = {{this._id}}>
+                <button type="submit" class = "showChat">
+                    {{this.name}}
+                </button>
+              </form>
+            </li>
+          {{/each}}
+        </ul>
+        <form method = "POST" action="createRoom" id = "createRoom">
+          <input type = "text" name="rName" id = "roomName">
+          <input type = "submit" value = "Create Room">
+        </form>
+      </div>
+    </div>
+    <div id = "chat" class = "hidden">
+      <div class = "overFlowY">
+        <table id = "messages">
+
+        </table>
+      </div>
+      <form method = "POST" id = "sendMessage">
+        <input type = "text" id = "message">
+        <input type = "submit" value = "Send">
+      </form>
+    </div>
+    <div id = "members">
+      <div class = "hidden" id = "guildName">{{guild._id}}</div>
+      <div id = "memberContainer">
+        <div id = "guildMembers">
+          <h4>Admins</h4>
+          {{#each guild.admins}}
+            <p class = "member">{{this}}</p>
+          {{/each}}
+          <h4> Members </h4>
+          {{#each guild.members}}
+            <p class = "member">{{this}}</p>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    {{else}}
+    <p>You need to be logged in to access this page.</p>
+  {{/if}}
+</div>
+
+<script src="/javascript/chatroom.js"></script>

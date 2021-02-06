@@ -1,7 +1,9 @@
-{{members}}
-
-<li>{{messages}}</li>
-<form method = "post" action = "">
-  <input type = "text" style = "visibility:hiddden" value = {{user}}> 
-  <button type = "submit" value = "join">
-<form>
+<div class = "container">
+  <h2>{{guild.name}}</h2>
+  <p>{{guild.description}}</p>
+  <form method = "post" action = "">
+    <input type = "hidden" name="guild" value = {{guild._id}}>
+    <input type = "hidden" name="memberCount" value = {{guild.memberCount}}>
+    <input type = "submit" value = "join">
+  <form>
+</div>

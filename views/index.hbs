@@ -1,2 +1,40 @@
-List of Games
-<a href = "/guilds"><img src = "https://upload.wikimedia.org/wikipedia/en/thumb/9/91/WoW_Box_Art1.jpg/220px-WoW_Box_Art1.jpg"></a>
+<div id = "indexContainer" class = "container">
+  <p>List of Games</p>
+  <input type = "text" id = "gameSearch" class = "searchBar" placeholder="Search">
+  <table id = "gameList">
+
+  {{#each arr}}
+    <tr class = "row">
+      <td>
+        <a href = "/guilds?name={{game}}" class = "gameName">{{game}}</a>
+      </td>
+      <td>
+        <a href = "/guilds?name={{game}}"><img src = {{img}} onerror="this.src = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'"></a>
+      </td>
+    </tr>
+  {{/each}}
+  </table>
+
+  {{#if user}}
+    <p>Can't find your game? <a href = "/addGame">Click here</a> to add it! </p>
+  {{/if}}
+</div>
+
+<script>
+  function filter() {
+    const input = document.getElementById('gameSearch');
+    const term = input.value.toUpperCase();
+    const rows = Array.from(document.getElementsByClassName('row'));
+    rows.map((r)=>{
+      const a = r.querySelector(".gameName");
+      if (a.textContent.toUpperCase().indexOf(term) > -1) {
+        r.style.display = "";
+      }
+      else {
+        r.style.display = "none";
+      }
+    });
+  }
+  const search = document.getElementById("gameSearch");
+  search.addEventListener("keyup", filter);
+</script>

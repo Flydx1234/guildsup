@@ -1,8 +1,12 @@
-<form method="post" action="">
-  <input type = "hidden" value = {{game}} name = "game">
-  Guild Name: <input type="text" name="name">
-  Guild Img Url: <input type="text" name="img">
-  Guild Description: <input type="text" name="desc">
-  <button type="submit">
-  </button>
-</form>
+<div class = "container">
+  <form method="post" action="">
+    Username: <input type="text" name="username">
+    Password: <input type="password" name="password">
+    <input type="submit" value="Login" name="login">
+    <a href = "/register"><button type="button">Register</button></a>
+  </form>
+  <p>{{msg}}</p>
+  <script>
+    document.getElementById("loginButton").style.display = "none";
+  </script>
+<div class = "container">

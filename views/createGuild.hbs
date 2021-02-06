@@ -1,8 +1,20 @@
-<form method="post" action="">
-  <input type = "hidden" value = {{game}} name = "game">
-  Guild Name: <input type="text" name="name">
-  Guild Img Url: <input type="text" name="img">
-  Guild Description: <input type="text" name="desc">
-  <button type="submit">
-  </button>
-</form>
+<div class = "container">
+  {{#if user}}
+    <form method="post" action="">
+      <input type = "hidden" value = {{game}} name = "game">
+      Game:
+      <select name = "game">
+      {{#each games}}
+        <option> {{game}}</option>
+      {{/each}}
+    </select>
+      Guild Name: <input type="text" name="name">
+      Guild Img Url: <input type="text" name="img">
+      Guild Description: <input type="text" name="desc">
+      <input type="submit" value="Create Guild">
+    </form>
+    {{msg}}
+    {{else}}
+    <p>You need to be logged in to access this page.</p>
+  {{/if}}
+</div>

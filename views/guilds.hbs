@@ -1,12 +1,41 @@
-List of guilds for the game
+<div class = "container">
+  <input type = "text" id = "guildSearch" class = "searchBar" placeholder="Search">
+  <p>List of guilds for {{game}}</p>
+  <a href = "/guilds?name={{game}}"><img src = {{img}}></a>
+  <ul>
+    {{#each arr}}
+      <li class = "guild">
+          <form method="GET" action="inguild">
+            <input type="hidden" name="guild" value = {{_id}}>
+            <button type="submit">
+                <p> <span class = "guildName">{{name}}</span> - {{description}} {{memberCount}}/{{memberLimit}} members</p>
+            </button>
+          </form>
+      </li>
+    {{/each}}
+    {{#if user}}
+      <form method = "GET" action="/createGuild">
+        <input type = "submit" value = "Create Guild">
+      </form>
+    {{/if}}
+  <ul>
+</div>
 
-<ul>
-  <li>
-    <form method="post" action="inguild">
-      <input type="hidden" name="name"> <!--value={{id}}-->
-      <button type="submit">
-        Post to load guild page for specific guild {{name}}
-      </button>
-    </form>
-  </li>
-<ul>
+<script>
+  function filter() {
+    const input = document.getElementById('guildSearch');
+    const term = input.value.toUpperCase();
+    const rows = Array.from(document.getElementsByClassName('guild'));
+    rows.map((r)=>{
+      const a = r.querySelector(".guildName");
+      if (a.textContent.toUpperCase().indexOf(term) > -1) {
+        r.style.display = "";
+      }
+      else {
+        r.style.display = "none";
+      }
+    });
+  }
+  const search = document.getElementById("guildSearch");
+  search.addEventListener("keyup", filter);
+</script>

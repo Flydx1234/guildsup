@@ -4,10 +4,15 @@
   "description": "Tired of not having anyone to play your favorite game with? Well, that's where Guilds comes in!\r Guilds is a platform for gamers to create their own communities for their favorite games much like an actual guild in a game such as WoW.\r Many games, such as Hearthstone, Genshin Impact, Fortnite, Among Us don't really have a system in place for players to build up a group of friends\r to consistently play together and do cool stuff.\r With Guilds, users can create their own accounts and keep track of the guilds that they are in for different games. Users can also create guilds of their\r own for others to join. The idea is to have a list of games that users can create guilds for, and as more users join the site, they would be able to add\r games that are not on the list to create a guild for. Initial goal is to implement at least a chat room for each guild group.",
   "main": "app.js",
   "dependencies": {
+    "axios": "^0.21.0",
+    "connect-flash": "^0.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "hbs": "^4.1.1",
-    "mongoose": "^5.10.11"
+    "mongoose": "^5.10.11",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "socket.io": "^3.0.3"
   },
   "devDependencies": {},
   "scripts": {
