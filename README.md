@@ -127,35 +127,5 @@ An Example Chat Room:
 7. as a guild member, I can see the guild members and chat in the chatroom
 8. as a guild member, I can send messages to the chat in the chatroom
 
-## Research Topics
-
-* (3 points) Integrate user authentication
-    * I'm going to be using passport for user authentication.
-    * Passport allows for authentication through a username/password, twitter, facebook, google, etc.
-    * This gives the user more options to log in, and verify their identity.
-* (3 points) Deploying my site through Heroku
-    * Heroku is a cloud application platform.
-    * Allows users to deploy and manage web apps, and has a free tier.
-    * I am using this because I would like my site to be deployed outside of the courant system.
-* (4 point) Integrating ReCaptcha and Axios
-    * ReCaptcha is a turing test to differentiate robots from humans.
-    * This helps prevent spam and bots from abusing the site.
-    * Required the use of axios to send a post request
-* (1 point) Integrating connect-flash
-    * Allows the sending of one time messages to the webpage.
-    * Used for sending error messages to the user for some forms such as registration.
-
-
-11 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
-
 
 ## [Link to Initial Main Project File](app.js)
-
-## Annotations / References Used
-
-1. [ReCaptcha Docs](https://developers.google.com/recaptcha/docs/display) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/3a34c4f22943c4aa23f93582bf84541a818d865c/views/register.hbs#L6)
-2. [Heroku Node.js Setup](https://devcenter.heroku.com/articles/getting-started-with-nodejs) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/3a34c4f22943c4aa23f93582bf84541a818d865c/Procfile#L1)
-3. [Passport Docs](http://www.passportjs.org/docs/authenticate/) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/master/app.js#L66-L91)
-4. [Axios Docs](https://github.com/axios/axios) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/b5947a19ccd9ff40d8f62f31bf1a987cbee6ef50/app.js#L153-L189)
-5. [Crypto Docs](https://nodejs.org/api/crypto.html) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/b5947a19ccd9ff40d8f62f31bf1a987cbee6ef50/app.js#L22-L24)
-6. [connect-flash Docs](https://www.npmjs.com/package/connect-flash) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/Flydx1234-final-project/blob/b5947a19ccd9ff40d8f62f31bf1a987cbee6ef50/app.js#L118-L125)
